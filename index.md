@@ -12,6 +12,10 @@ subtitle: 고생대 삼엽충의 전성기를 재현
 ## 학습 목차
 
 1. [OpenCV](opencv-intro.html)
+1. [OpenCV 설치](opencv-install.html)
+1. [컴퓨터가 보는 이미지](image-files.html)
+1. [OpenCV 맛보기](opencv-start.html)
+
 
 > ### xwMOOC 오픈 교재
 > 

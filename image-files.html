@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: </title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <h1 class="title"></h1>
+          <hr />
+<p>layout: page title: xwMOOC 고생대 프로젝트 subtitle: 컴퓨터가 보는 이미지</p>
+<h2 id="단색-이미지-파일">1. 단색 이미지 파일</h2>
+<p>단색으로 저장된 이미지 파일을 불러와서 컴퓨터가 인식하는 형태, 즉 0과 1로 보게 되면 다음과 같다. <span class="math inline">\(4 \times 4\)</span> 행렬로 <code>1</code>은 점이 없고, <code>0</code>은 점이 있는 것으로 저장된다.</p>
+<pre class="output"><code>[[0 1 1 1]
+ [1 1 1 1]
+ [1 1 1 1]
+ [1 1 1 0]]</code></pre>
+<p>이미지를 불러오는데 <code>PIL</code>을 사용하고, 행렬변환 및 출력처리를 위해 <code>numpy</code>를 사용한다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> PIL <span class="im">import</span> Image
+<span class="im">import</span> numpy <span class="im">as</span> np
+
+imgSinglePng <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">&#39;../fig/bw-single-dot.png&#39;</span>)
+imgSinglePngArr <span class="op">=</span> np.asarray(imgSinglePng)
+
+<span class="bu">print</span> imgSinglePngArr</code></pre></div>
+<p><img src="fig/bw-single-dot.png" alt="점하나 그림" width="20%"></p>
+<h3 id="단색-.png-파일-생성방법">1.1. 단색 <code>.png</code> 파일 생성방법</h3>
+<p>먼저 윈도우즈 <code>그림판</code>을 최대한 확대하고 <code>도구</code> → <code>연필</code>을 선택한다. 그리고 색상을 선택하고 점을 찍는다. 위 사례는 <span class="math inline">\(4 \times 4\)</span> 그림판에 점을 첫번째 행과 첫번째 열에 찍고, 마지막 4번째 열과 4번째 행에 찍은 결과다.</p>
+<p>점을 두개 찍은 후에 이미지 파일을 저장하는데 <em>파일 형식</em> 은 단색 비트맵(.bmp)으로 저장한다. 그리고 나서 <code>.png</code>로 저장한다. <code>.png</code> 파일은 인터넷에서 <code>.bmp</code> 대신 표준으로 사용되는 파일이다.</p>
+<h2 id="색상-파일">2. 256 색상 파일</h2>
+<p>윈도우즈 <code>그림판</code>에서 256 생상(BGR) 체계를 적용하면 다음과 같다. 검정색은 0, 흰색은 255, 113은 녹색에 가깝고, 210은 청색, 79는 붉은색에 가깝게 표현된다.</p>
+<pre class="output"><code>[[  0 255 255 113]
+ [255 255 255 255]
+ [255 255 255 255]
+ [ 79 255 255 210]]</code></pre>
+<p>위 코드와 동일하고 256색상을 갖는 <code>.bmp</code> 파일만 입력값으로 넣어준다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">img256Bmp <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">&#39;../fig/color-256-dot.bmp&#39;</span>)
+img256BmpArr <span class="op">=</span> np.asarray(img256Bmp)
+
+<span class="bu">print</span> img256BmpArr</code></pre></div>
+<p><img src="fig/color-256-dot.png" alt="256 색상" width="20%"></p>
+<h2 id="색상-파일-1">3. 256 색상 파일</h2>
+<p>상기 <code>.bmp</code> 파일을 <code>.png</code> 파일로 저장할 경우 BGR 체계에 더해서 알파값이 더 추가된다. 즉, 검은색은 0, 0, 0 이 되고 추가로 알파가 추가되어 부드러움으로 더 표현할 수 있다. BGR은 각각 0 ~ 255 가지 색상을 갖게 되어 총 표현할 수 있는 색상 수는 <span class="math inline">\(256 \times 256 \times 256\)</span>이 된다. 그리고 마지막 알파도 0 ~ 255 값을 갖게 되고, 가장 투평한 것이 0, 불투명한 최대 값이 255를 갖는다.</p>
+<p>가장 상단 행렬이 첫번째 행을 나타내고, 그 다음 행렬이 그 다음 행렬을 나타낸다.</p>
+<pre class="output"><code>[[[  0   0   0 255]
+  [255 255 255 255]
+  [255 255 255 255]
+  [ 32 192  64 255]]
+
+ [[255 255 255 255]
+  [255 255 255 255]
+  [255 255 255 255]
+  [255 255 255 255]]
+
+ [[255 255 255 255]
+  [255 255 255 255]
+  [255 255 255 255]
+  [255 255 255 255]]
+
+ [[224  32  64 255]
+  [255 255 255 255]
+  [255 255 255 255]
+  [ 64  64 192 255]]]</code></pre>
+<p>위 코드와 동일하고 256색상을 갖는 <code>.png</code> 파일만 입력값으로 넣어준다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">img256Png <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">&#39;../fig/color-256-dot.png&#39;</span>)
+img256PngArr <span class="op">=</span> np.asarray(img256Png)
+
+<span class="bu">print</span> img256PngArr</code></pre></div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>

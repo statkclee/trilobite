@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: xwMOOC 고생대 프로젝트</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">xwMOOC 고생대 프로젝트</h1></a>
+          <h2 class="subtitle">OpenCV 설치</h2>
+          <h2 id="윈도우-설치-완성모습">1. 윈도우 설치 완성모습</h2>
+<p><a href="http://opencv.org/">OpenCV</a> 파이썬 설치가 성공적으로 이루어진 모습은 다음과 같다.</p>
+<p>파이썬 쉘을 열고 <code>import cv2</code> 모듈을 가져와서 <code>cv2.__version__</code> 을 출력하면 OpenCV 버젼을 출력하면 준비가 완료된 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> cv2
+<span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span> cv2.__version__</code></pre></div>
+<pre class="output"><code>3.1.0</code></pre>
+<h2 id="윈도우-설치">1. 윈도우 설치</h2>
+<p>윈도우 환경에서 OpenCV를 설치할 때 몇가지 설정을 주의해야 한다.</p>
+<ol style="list-style-type: decimal">
+<li>파이썬 2.7 기준 파이썬을 설치한다.
+<ul>
+<li><code>C:\Python27</code> 디렉토리에 기본디폴트 설정으로 설치된다.</li>
+</ul></li>
+<li><code>OpenCV for Windows</code>를 <a href="http://opencv.org/downloads.html">OpenCV 다운로드</a> 사이트에서 받는다.
+<ul>
+<li>예를 들어 다운로드받은 디렉토리가 <code>C:\</code> 밑에 압축을 풀게되면 <code>C:\opencv\</code> 에 파일이</li>
+</ul></li>
+<li><code>cv2.pyd</code> 파일을 파이썬 디렉토리에 복사한다.
+<ul>
+<li>복사대상 <code>cv2.pyd</code> 파일 위치 : <code>C:\opencv\build\python\2.7\x86</code></li>
+<li>복사될 위치 : <code>C:\Python27\Lib\site-packages</code></li>
+</ul></li>
+<li>1–3번 적용후에 문제가 생길 경우: <code>C:\opencv</code> 디렉토리를 환경변수에 적용
+<ul>
+<li><code>환경변수</code>에 <code>C:\opencv</code> 디렉토리를 위치를 운영체제에 알려준다.</li>
+<li>제어판 → 시스템 → 고급 시스템 설정 → 환경변수 → 시스템변수 → 편집 → <code>C:\opencv</code> 추가 → 확인</li>
+</ul></li>
+</ol>
+<h2 id="우분투">2. 우분투</h2>
+<h2 id="공통-이미지-라이브러리-설치">3. 공통 이미지 라이브러리 설치</h2>
+<p><a href="https://en.wikipedia.org/wiki/Python_Imaging_Library">Python Imaging Library(PIL)</a>는 이미지를 열고, 조작하고, 다양한 형태로 저장할 수 있게 돕는 이미지 라이브러리다. 2009년 마지막 출시된 후에 멈춰진 상태로, <a href="http://python-pillow.org/">Pillow</a> 후속 프로젝트로 이어지고 있다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">$ pip install Pillow</code></pre></div>
+<h2 id="section">4.</h2>
+<p>32비트 혹은 64비트에 대한 설정, 32비트의 경우 <code>import Image</code>, 64비트의 경우 <code>from PIL import Image</code>을 사용한다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> Image
+<span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> PIL <span class="im">import</span> Image</code></pre></div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>
