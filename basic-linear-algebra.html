@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: </title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <h1 class="title"></h1>
+          <h2 id="중학교-시절을-회고하며">1. 중학교 시절을 회고하며…</h2>
+<p>대수를 사용해서 미지의 수 <span class="math inline">\(x\)</span> 한개를 놓고 푸는 것을 넘어, 미지수를 두개 넣고 방정식을 푸는 것을 이원일차 연립방정식이라고 부른다.</p>
+<ul>
+<li>미지수 <span class="math inline">\(x\)</span>가 하나일 경우 수식이 하나 주어지면 미지수를 구할 수 있다.
+<ul>
+<li>예를 들어, 미지수 <span class="math inline">\(x\)</span>가 하나, 수식이 하나 <span class="math inline">\(x-3=4\)</span> 주어지면, <span class="math inline">\(x=7\)</span></li>
+</ul></li>
+<li>미지수 <span class="math inline">\(x\)</span>가 두개인 경우 수식이 최수 두개(두 수식도 일정 조건이 만족된다고 가정하면) 주어야 미지수 두개를 유일하게 구할 수 있다. <span class="math display">\[\begin{cases} 3x + 5y &amp;= 1 \\ 
+            -3x + 2y &amp;= 6 \end{cases}\]</span>
+<ul>
+<li>가감법, 대입법 등의 이원일차연립방정식 해법을 사용해서 손으로 풀면 <span class="math inline">\(y=1, x=-\frac{4}{3}\)</span> 두 해를 구할 수 있다.</li>
+</ul></li>
+</ul>
+<h3 id="파이썬-넘파이로-풀어보기">1.1. 파이썬 넘파이로 풀어보기</h3>
+<p>영혼이 없는 상기 이원일차 연립방정식을 파이썬이 알아먹기 좋은 형태, 행렬로 표현한다.</p>
+<p><span class="math display">\[ \begin{bmatrix} 3 &amp; 5 \\ 
+                   -3 &amp; 2 \end{bmatrix} \times 
+   \left[ \begin{array}{c} x \\ 
+                 y \end{array} \right] =                  
+   \left[ \begin{array}{c} 1 \\ 
+                 6 \end{array} \right] 
+\]</span></p>
+<p>행렬표기법으로 표현하면 <span class="math inline">\(AX=B\)</span> 가 되고, 이원일차 연립방정식의 해는 <span class="math inline">\(X=A^{-1} B\)</span>가 된다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
+
+A <span class="op">=</span> np.matrix([[<span class="dv">3</span>,<span class="dv">5</span>],
+               [<span class="op">-</span><span class="dv">3</span>,<span class="dv">2</span>]])
+B <span class="op">=</span> np.matrix([[<span class="dv">1</span>],
+               [<span class="dv">6</span>]])
+
+X <span class="op">=</span> A<span class="op">**</span>(<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>B
+<span class="bu">print</span> X</code></pre></div>
+<pre><code>[[-1.33333333]
+ [ 1.        ]]</code></pre>
+<h3 id="넘파이-내부함수-활용">1.2. 넘파이 내부함수 활용</h3>
+<p><span class="math inline">\(X=A^{-1} B\)</span> 수식을 바로 넣어 계산하는 대신에, 역행렬을 계산하는 넘파이 내부 함수를 사용하여 해를 바로 구할 수도 있다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">sol <span class="op">=</span> np.linalg.inv(A).dot(B)
+<span class="bu">print</span> sol</code></pre></div>
+<pre><code>[[-1.33333333]
+ [ 1.        ]]</code></pre>
+<h2 id="행렬-기본-연산">2. 행렬 기본 연산</h2>
+<p>행렬 두개 <span class="math inline">\(J\)</span>와 <span class="math inline">\(H\)</span>를 정의하자.</p>
+<p><span class="math display">\[ J = \begin{bmatrix} 1 &amp; 1 \\ 
+                   0 &amp; 1 \end{bmatrix}, 
+   H = \begin{bmatrix} 2 &amp; 0 \\ 
+                   3 &amp; 1 \end{bmatrix}\]</span></p>
+<p>정의된 두 행렬에 대한 사칙연산을 수행한다.</p>
+<h3 id="행렬-덧셈">2.1.행렬 덧셈</h3>
+<p><span class="math inline">\(J+H\)</span> 를 손으로 계산하면 다음과 같다.</p>
+<p><span class="math display">\[ \begin{bmatrix} 1 &amp; 1 \\ 
+                   0 &amp; 1 \end{bmatrix} + 
+   \begin{bmatrix} 2 &amp; 0 \\ 
+                   3 &amp; 1 \end{bmatrix} =
+   \begin{bmatrix} 3 &amp; 1 \\ 
+                   3 &amp; 2 \end{bmatrix}
+\]</span></p>
+<p>넘파이를 사용해서 코드로 계산하면 다음과 같다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> numpy  <span class="im">import</span> <span class="op">*</span>
+
+J <span class="op">=</span> array( [[<span class="dv">1</span>,<span class="dv">1</span>],
+            [<span class="dv">0</span>,<span class="dv">1</span>]] )
+H <span class="op">=</span> array( [[<span class="dv">2</span>,<span class="dv">0</span>],
+            [<span class="dv">3</span>,<span class="dv">1</span>]] )
+<span class="bu">print</span> J<span class="op">+</span>H</code></pre></div>
+<pre><code>[[3 1]
+ [3 2]]</code></pre>
+<h3 id="행렬-뺄셈">2.2.행렬 뺄셈</h3>
+<p><span class="math inline">\(J-H\)</span> 를 손으로 계산하면 다음과 같다.</p>
+<p><span class="math display">\[ \begin{bmatrix} 1 &amp; 1 \\ 
+                   0 &amp; 1 \end{bmatrix} - 
+   \begin{bmatrix} 2 &amp; 0 \\ 
+                   3 &amp; 1 \end{bmatrix} =
+   \begin{bmatrix} -1 &amp; 1 \\ 
+                   -3 &amp; 0 \end{bmatrix}
+\]</span></p>
+<p>넘파이를 사용해서 코드로 계산하면 다음과 같다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span> J<span class="op">-</span>H</code></pre></div>
+<pre><code>[[-1  1]
+ [-3  0]]</code></pre>
+<h3 id="스칼라-행렬-곱셈">2.3. 스칼라 행렬 곱셈</h3>
+<p>스칼라 <span class="math inline">\(\lambda\)</span>를 2로 놓고, <span class="math inline">\(\lambda \times J\)</span> 를 손으로 계산하면 다음과 같다.</p>
+<p><span class="math display">\[ 2 \times 
+   \begin{bmatrix} 1 &amp; 1 \\ 
+                   0 &amp; 1 \end{bmatrix} =
+   \begin{bmatrix} 2 &amp; 2 \\ 
+                   0 &amp; 2 \end{bmatrix}
+\]</span></p>
+<p>넘파이를 사용해서 코드로 계산하면 다음과 같다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span> <span class="dv">2</span><span class="op">*</span>J</code></pre></div>
+<pre><code>[[2 2]
+ [0 2]]</code></pre>
+<h3 id="행렬-원소별-곱셈과-행렬곱셈">2.4. 행렬 원소별 곱셈과 행렬곱셈</h3>
+<p>행렬 원소들마다 곱하는 곱셈이 있는 반면에, 내적으로 행렬을 계산하는 방식이 있다.</p>
+<h4 id="행렬-원소들마다-곱하는-곱셈">2.4.1. 행렬 원소들마다 곱하는 곱셈</h4>
+<p>먼저, 원소들만 순차적으로 계산하는 것을 먼저 살펴보자. <span class="math inline">\(J * H\)</span> 를 손으로 계산하면 다음과 같다.</p>
+<p><span class="math display">\[ \begin{bmatrix} 1 &amp; 1 \\ 
+                   0 &amp; 1 \end{bmatrix} * 
+   \begin{bmatrix} 2 &amp; 0 \\ 
+                   3 &amp; 1 \end{bmatrix} =
+   \begin{bmatrix} 2 &amp; 0 \\ 
+                   0 &amp; 1 \end{bmatrix}
+\]</span></p>
+<p>넘파이를 사용해서 코드로 계산하면 다음과 같다. 내적에는 <code>dot()</code> 함수가 사용된다.</p>
+<p><code>*</code> 연산자를 사용하게 되면 <span class="math inline">\(J\)</span> 행렬 첫번째 원소와 <span class="math inline">\(H\)</span> 행렬 첫번째 원소를 곱하기 방식을 모든 행렬 원소들마다 반복한다. 따라서, <span class="math inline">\(J_{11} \times H_{11} = 1 \times 2 = 2\)</span>, <span class="math inline">\(\cdots\)</span> $J_{22} H_{22} = 1 1 = $이 된다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span> J<span class="op">*</span>H</code></pre></div>
+<pre><code>[[2 0]
+ [0 1]]</code></pre>
+<h4 id="행렬-곱셈">2.4.2. 행렬 곱셈</h4>
+<p><span class="math inline">\(J \times H\)</span> 를 손으로 계산하면 다음과 같다.</p>
+<p><span class="math display">\[ \begin{bmatrix} 1 &amp; 1 \\ 
+                   0 &amp; 1 \end{bmatrix} \times 
+   \begin{bmatrix} 2 &amp; 0 \\ 
+                   3 &amp; 1 \end{bmatrix} =
+   \begin{bmatrix} 5 &amp; 1 \\ 
+                   3 &amp; 1 \end{bmatrix}
+\]</span></p>
+<p>넘파이를 사용해서 코드로 계산하면 다음과 같다. 행렬곱셈 내적에는 <code>dot()</code> 함수가 사용된다.</p>
+<p><code>*</code> 연산자를 사용하게 되면 <span class="math inline">\(J\)</span> 행렬 첫번째 행과 <span class="math inline">\(H\)</span> 행렬 첫열 요소를 곱하기를 동일한 방식으로 반복하게 된다. 따라서, <span class="math inline">\(J_{11} \times H_{11} + J_{12} \times H_{12} = 1 \times 2 + 1 \times 3 = 2 + 3 = 5\)</span> 가 되고 이 값이 행렬곱셈으로 생성되는 결과행렬의 첫번째 행, 첫번째열 원소로 들어간다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span> dot(J, H)</code></pre></div>
+<pre><code>[[5 1]
+ [3 1]]</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>
