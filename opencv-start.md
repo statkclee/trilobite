@@ -50,7 +50,8 @@ print img256PngArr
 
 ## 2. 이미지 작업하기
 
-이미지 파일을 윈도우 그림판에서 불러온다. 작업할 그림은 [GitHub]()에서 다운로드 받는다.
+이미지 파일을 윈도우 그림판에서 불러온다. 작업할 그림은 [GitHub](https://raw.githubusercontent.com/statkclee/trilobite/gh-pages/fig/color-256-dot.png)에서 다운로드 받는다. 너무작아 눈에 잘 보이지 않을 수 있다. 화면 좌측 상단 끝에 위치하고 된다--스타크래프트 용어로 11시 방향 화면 끝이다.
+
 윈도우즈 `그림판`을 최대한 확대하고 `도구` &rarr; `연필`을 선택한다.
 검은색 점을 두개 찍는다.
 
