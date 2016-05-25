@@ -19,24 +19,26 @@ subtitle: 고생대 삼엽충의 전성기를 재현
 
 [^python-cv-lib]: [My Top 9 Favorite Python Libraries for Building Image Search Engines](http://www.pyimagesearch.com/2014/01/12/my-top-9-favorite-python-libraries-for-building-image-search-engines/)
 
-* **맨손으로 시작**
-    * [Numpy](http://www.numpy.org/): 이미지는 결국 다차원 행렬로 행렬제어를 통해 이미지를 제어.
-    * [Scipy](http://scipy.org/): 결국, 거리를 측정하여 두개 이상의 이미지 유사성 일치도를 파악하고 분류하는데 필요.
-* **입출력**
-    * [matplotlib](http://matplotlib.org/)
-* **이미지 처리**    
-    * [Python Imaging Library(PIL)](https://en.wikipedia.org/wiki/Python_Imaging_Library): 
-[Python Pillow](http://python-pillow.org/)는 [PIL](http://www.pythonware.com/products/pil/) 포크
-* **컴퓨터 비젼**
-    * [OpenCV](http://opencv.org/): 오픈 컴퓨터 비젼
-    * [SimpleCV](http://simplecv.org/): OpenCV를 쉽고 편하게.
-    * [Scikit-learn](http://scikit-learn.org/stable/): 파이썬 기계학습
-    * [mahotas](http://luispedro.org/software/mahotas): [생명정보 이미지](https://en.wikipedia.org/wiki/Bioimage_informatics)
-    * [ilastik](http://www.ilastik.org/): interactive learning and segmentation toolkit
+> ### 파이썬 컴퓨터 비전 도구 모음 {.getready}
+> 
+> * **맨손으로 시작**
+>     * [Numpy](http://www.numpy.org/): 이미지는 결국 다차원 행렬로 행렬제어를 통해 이미지를 제어.
+>     * [Scipy](http://scipy.org/): 결국, 거리를 측정하여 두개 이상의 이미지 유사성 일치도를 파악하고 분류하는데 필요.
+> * **입출력**
+>     * [matplotlib](http://matplotlib.org/)
+> * **이미지 처리**    
+>     * [Python Imaging Library(PIL)](https://en.wikipedia.org/wiki/Python_Imaging_Library): [Python Pillow](http://python-pillow.org/)는 [PIL](http://www.pythonware.com/products/pil/) 포크
+> * **컴퓨터 비젼**
+>     * [OpenCV](http://opencv.org/): 오픈 컴퓨터 비젼
+>     * [SimpleCV](http://simplecv.org/): OpenCV를 쉽고 편하게.
+>     * [Scikit-learn](http://scikit-learn.org/stable/): 파이썬 기계학습
+>     * [mahotas](http://luispedro.org/software/mahotas): [생명정보 이미지](https:// en.wikipedia.org/wiki/Bioimage_informatics)
+>     * [ilastik](http://www.ilastik.org/): interactive learning and segmentation toolkit
 
 ## 학습 목차
 
 1. **준비 및 설치**
+    1. [들어가며](cv-intro.html)
     1. [OpenCV 설치](opencv-install.html)
 1. **컴퓨터 비젼 도구 없이 맨손으로** 
     1. [선형대수](basic-linear-algebra.html)
