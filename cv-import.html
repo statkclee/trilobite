@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: xwMOOC 고생대 프로젝트</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">xwMOOC 고생대 프로젝트</h1></a>
+          <h2 class="subtitle">이미지 파일 가져오기</h2>
+          <h2 id="이미지-파일-저장소">1. 이미지 파일 저장소</h2>
+<p>영어를 위해 단어를 모아놓은 저장소가 <a href="http://wordnet.princeton.edu/">워드넷(WordNet)</a>이라면, 이미지를 워드넷과 동일한 목적으로 만들어 놓은 저장소가 <a href="http://image-net.org/">이미지넷(ImageNet)</a>이다.</p>
+<p>이곳에서 목적에 맞는 이미지를 마치 외부 디스크처럼 연결하여 로컬 컴퓨터에 저장하지 않고도 가져와서 작업할 수 있다.</p>
+<h2 id="이미지-데이터를-가져오는-다양한-방법">2. 이미지 데이터를 가져오는 다양한 방법</h2>
+<h3 id="외부장비를-직접활용">2.1. 외부장비를 직접활용</h3>
+<h3 id="인터넷에서-가져오는-방법">2.2. 인터넷에서 가져오는 방법</h3>
+<p>인터넷에서 이미지를 가져오는 방법은 다음과 같다.</p>
+<ol style="list-style-type: decimal">
+<li>먼저 이미지가 위치한 정확한 URL을 파악: <a href="http://image-net.org/">이미지넷(ImageNet)</a>에서 검색어로 <code>raspberry</code>를 넣어 라즈베리 이미지 URL을 확보</li>
+<li><code>urllib</code> 통한 인터넷 연결: 라즈베리 이미지가 외부 저장소를 작업컴퓨터와 <code>urllib</code> 통해 연결</li>
+<li>이미지 객체를 넘파이 자료구조로 변환: <code>urllib</code>으로 넘어온 문자열 데이터를 넘파이 행렬 자료구조로 변환</li>
+<li>넘파이 객체를 openCV 객체로 변환: 넘파이 행렬 데이터를 openCV 작업데이터로 변환</li>
+<li>자유로이 활용</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> cv2
+<span class="im">import</span> urllib
+<span class="im">import</span> numpy <span class="im">as</span> np
+
+raspberry <span class="op">=</span> urllib.urlopen(<span class="st">&#39;http://farm1.static.flickr.com/49/194935899_8b7ae04746.jpg&#39;</span>)
+
+raspberryArr <span class="op">=</span> np.asarray(<span class="bu">bytearray</span>(raspberry.read()), dtype<span class="op">=</span>np.uint8)
+raspberryImg <span class="op">=</span> cv2.imdecode(raspberryArr, <span class="op">-</span><span class="dv">1</span>)
+
+cv2.imshow(<span class="st">&#39;Raspberry&#39;</span>, raspberryImg)
+
+<span class="cf">if</span> cv2.waitKey() <span class="op">&amp;</span> <span class="bn">0xff</span> <span class="op">==</span> <span class="dv">27</span>:
+    quit()</code></pre></div>
+<h3 id="로컬-컴퓨터이동용-usb에-저장된-이미지를-가져오는-방법">2.3. 로컬 컴퓨터(이동용 USB)에 저장된 이미지를 가져오는 방법</h3>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>
