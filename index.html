@@ -48,21 +48,49 @@
 - William Gibson</p>
 </div>
 </section>
+<p><img src="fig/python-cv-toolchain.png" alt="파이썬 컴퓨터 비젼 툴체인" width="70%"></p>
+<p>물리적 세계를 다양한 카메라 기술을 사용해서 디지털 데이터로 변환을 한 후에 이를 최종상품 형태로 제공하기 전에 다양한 시각정보를 가공, 처리, 생성하는 과정을 거치게 된다. 만약 파이썬 언어로 이를 통합적으로 구성할 경우를 살펴보자.</p>
+<p>고생대 참엽충의 전성기 재현하는데 사용되는 파이썬 팩키지는 다음과 같다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<ul>
+<li><strong>맨손으로 시작</strong>
+<ul>
+<li><a href="http://www.numpy.org/">Numpy</a>: 이미지는 결국 다차원 행렬로 행렬제어를 통해 이미지를 제어.</li>
+<li><a href="http://scipy.org/">Scipy</a>: 결국, 거리를 측정하여 두개 이상의 이미지 유사성 일치도를 파악하고 분류하는데 필요.</li>
+</ul></li>
+<li><strong>입출력</strong>
+<ul>
+<li><a href="http://matplotlib.org/">matplotlib</a></li>
+</ul></li>
+<li><strong>이미지 처리</strong>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Python_Imaging_Library">Python Imaging Library(PIL)</a>: <a href="http://python-pillow.org/">Python Pillow</a>는 <a href="http://www.pythonware.com/products/pil/">PIL</a> 포크</li>
+</ul></li>
+<li><strong>컴퓨터 비젼</strong>
+<ul>
+<li><a href="http://opencv.org/">OpenCV</a>: 오픈 컴퓨터 비젼</li>
+<li><a href="http://simplecv.org/">SimpleCV</a>: OpenCV를 쉽고 편하게.</li>
+<li><a href="http://scikit-learn.org/stable/">Scikit-learn</a>: 파이썬 기계학습</li>
+<li><a href="http://luispedro.org/software/mahotas">mahotas</a>: <a href="https://en.wikipedia.org/wiki/Bioimage_informatics">생명정보 이미지</a></li>
+<li><a href="http://www.ilastik.org/">ilastik</a>: interactive learning and segmentation toolkit</li>
+</ul></li>
+</ul>
 <h2 id="학습-목차">학습 목차</h2>
 <ol style="list-style-type: decimal">
 <li><strong>준비 및 설치</strong>
 <ol style="list-style-type: decimal">
-<li><a href="opencv-intro.html">OpenCV</a></li>
 <li><a href="opencv-install.html">OpenCV 설치</a></li>
 </ol></li>
-<li><strong>아무 생각이 없을 때보는 수학</strong>
+<li><strong>컴퓨터 비젼 도구 없이 맨손으로</strong>
 <ol style="list-style-type: decimal">
 <li><a href="basic-linear-algebra.html">선형대수</a></li>
+<li><a href="image-files.html">컴퓨터가 보는 이미지</a><br />
+</li>
 </ol></li>
 <li><strong>맛보기</strong>
 <ol style="list-style-type: decimal">
-<li><a href="image-files.html">컴퓨터가 보는 이미지</a></li>
+<li><a href="cv-hello-world.html">헬로 월드</a></li>
 <li><a href="opencv-start.html">OpenCV 맛보기</a></li>
+<li><a href="adding-images.html">이미지 조합</a></li>
 </ol></li>
 </ol>
 <blockquote>
@@ -94,6 +122,12 @@
 <li><a href="http://statkclee.github.io/ml">기계학습</a></li>
 </ul>
 </blockquote>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="http://www.pyimagesearch.com/2014/01/12/my-top-9-favorite-python-libraries-for-building-image-search-engines/">My Top 9 Favorite Python Libraries for Building Image Search Engines</a><a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
         </div>
       </div>
       </article>

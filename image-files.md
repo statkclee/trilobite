@@ -2,7 +2,7 @@
 layout: page
 title: xwMOOC 고생대 프로젝트
 subtitle: 컴퓨터가 보는 이미지
-
+---
 
 ## 1. 단색 이미지 파일
 

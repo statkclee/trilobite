@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: xwMOOC 고생대 프로젝트</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">xwMOOC 고생대 프로젝트</h1></a>
+          <h2 class="subtitle">컴퓨터 비젼 헬로우 월드</h2>
+          <p>컴퓨터가 보는 세상을 컴퓨터로 작업하기 위한 모든 준비가 되었다면, 다음 단계로 이미지 정보를 가져오고, 이를 처리하고, 저장하는 것이 정상적으로 작동되는지 확인한다. 일명, 컴퓨터 비젼 “헬로우 월드(Hello World)” 코드를 작성해 본다.</p>
+<ol style="list-style-type: decimal">
+<li>파이썬 PIL 라이브러리를 사용해서 컴퓨터가 이미지를 불러와서 인식하게 한다.</li>
+<li>불러온 이미지를 넘파이 객체로 변환하여 화면에 출력하여 이미지 내용을 확인한다.</li>
+<li>이미지 그대로 어떤 변경작업을 수행하지 않았기 때문에 이름을 변경하여 다른 이름으로 저정한다.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> PIL <span class="im">import</span> Image
+<span class="im">import</span> numpy <span class="im">as</span> np
+
+<span class="co"># 1. 이미지 열기</span>
+imgSinglePng <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">&#39;../fig/matplotlib-viewer.png&#39;</span>)
+
+<span class="co"># 2. 이미지 처리</span>
+imgSinglePngArr <span class="op">=</span> np.asarray(imgSinglePng)
+<span class="bu">print</span> imgSinglePngArr
+
+<span class="co"># 3. 처리결과 저장</span>
+saveImage <span class="op">=</span> Image.fromarray(imgSinglePngArr)
+saveImage.save(<span class="st">&#39;../fig/save-img.png&#39;</span>)</code></pre></div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>
