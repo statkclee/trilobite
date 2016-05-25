@@ -69,4 +69,12 @@ plt.imshow(cv2.cvtColor(lenaJpg, cv2.COLOR_BGR2RGB)) # RGB
 plt.show()
 ~~~
 
+~~~ {.output}
+===== Lena Image Info =====
+
+Shape:  (512, 512, 3)
+Size:   786432
+Type:   uint8
+~~~
+
 <img src="fig/lena-info-bgr2rgb.png" alt="레나 이미지 정보 및 색상표 보정" width="50%">
