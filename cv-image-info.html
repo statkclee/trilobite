@@ -64,6 +64,27 @@ raspberryImg <span class="op">=</span> cv2.imdecode(raspberryArr, <span class="o
 Shape:  (355, 500, 3)
 Size:   532500
 Type:   uint8</code></pre>
+<h2 id="로컬-이미지-파일-예제">2. 로컬 이미지 파일 예제</h2>
+<p>로컬이미지 파일을 가져오는 것은 훨씬 간단한데, <code>imread()</code> 메쏘드를 사용하고, 인자로 불러 작업할 이미지 파일을 넣어준다. 기본적인 이미지 정보는 위와 동일하다.</p>
+<p>OpenCV 색상체계가 BGR로 RGB를 기본으로 처리하는 matplotlib 팩키지에는 색상이 뒤빠뀌어 그래프로 표현된다. 이를 방지하기 위해서 <code>cvtColor()</code> 메쏘드를 사용해서 변환을 한 후에 matplotlib에 넣어준다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> cv2
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt
+
+<span class="co"># Import Image from the Local Disk</span>
+lenaJpg <span class="op">=</span> cv2.imread(<span class="st">&#39;../fig/lena512.jpg&#39;</span>)
+
+<span class="co"># Get Basic Info</span>
+<span class="bu">print</span> <span class="st">&#39;===== Lena Image Info =====</span><span class="ch">\n</span><span class="st">&#39;</span>
+<span class="bu">print</span> <span class="st">&#39;Shape: &#39;</span>, lenaJpg.shape
+<span class="bu">print</span> <span class="st">&#39;Size:  &#39;</span>, lenaJpg.size
+<span class="bu">print</span> <span class="st">&#39;Type:  &#39;</span>, lenaJpg.dtype
+
+<span class="co"># Show</span>
+plt.axis(<span class="st">&quot;off&quot;</span>)
+<span class="co">#plt.imshow(lenaJpg) # BGR</span>
+plt.imshow(cv2.cvtColor(lenaJpg, cv2.COLOR_BGR2RGB)) <span class="co"># RGB</span>
+plt.show()</code></pre></div>
+<p><img src="fig/lena-info-bgr2rgb.png" alt="레나 이미지 정보 및 색상표 보정" width="50%"></p>
         </div>
       </div>
       </article>

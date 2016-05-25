@@ -42,3 +42,31 @@ Size:   532500
 Type:   uint8
 ~~~
 
+## 2. 로컬 이미지 파일 예제
+
+로컬이미지 파일을 가져오는 것은 훨씬 간단한데, `imread()` 메쏘드를 사용하고, 인자로 불러 작업할 이미지 파일을 넣어준다. 
+기본적인 이미지 정보는 위와 동일하다.
+
+OpenCV 색상체계가 BGR로 RGB를 기본으로 처리하는 matplotlib 팩키지에는 색상이 뒤빠뀌어 그래프로 표현된다. 이를 방지하기 위해서 `cvtColor()` 메쏘드를 사용해서 변환을 한 후에 matplotlib에 넣어준다.
+
+~~~ {.python}
+import cv2
+import matplotlib.pyplot as plt
+
+# Import Image from the Local Disk
+lenaJpg = cv2.imread('../fig/lena512.jpg')
+
+# Get Basic Info
+print '===== Lena Image Info =====\n'
+print 'Shape: ', lenaJpg.shape
+print 'Size:  ', lenaJpg.size
+print 'Type:  ', lenaJpg.dtype
+
+# Show
+plt.axis("off")
+#plt.imshow(lenaJpg) # BGR
+plt.imshow(cv2.cvtColor(lenaJpg, cv2.COLOR_BGR2RGB)) # RGB
+plt.show()
+~~~
+
+<img src="fig/lena-info-bgr2rgb.png" alt="레나 이미지 정보 및 색상표 보정" width="50%">
