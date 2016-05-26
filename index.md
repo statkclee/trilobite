@@ -55,6 +55,7 @@ subtitle: 고생대 삼엽충의 전성기를 재현
     1. [이미지 한개 변환작업](cv-img-conversion.html)
     1. [이미지 다수 변환작업](cv-imgs-conversion.html)
 1. [이미지에 나온 책이 몇개](cv-count-books.html)
+1. [얼굴인식-Cascade](cv-face-detection.html)
 
 > ### xwMOOC 오픈 교재
 > 

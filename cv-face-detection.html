@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: xwMOOC 고생대 프로젝트</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">xwMOOC 고생대 프로젝트</h1></a>
+          <h2 class="subtitle">얼굴인식 - Cascade</h2>
+          <h2 id="haar-케스케이드">1. Haar 케스케이드</h2>
+<p>Haar 케스케이드(Cascade)를 활용하여 사진 속 얼굴과 눈을 인식해본다.</p>
+<p><img src="fig/haar-face-detection.png" alt="얼굴인식" width="30%"></p>
+<p>Haar 케스케이드 눈과 얼굴 xml 파일을 구해 이것을 이미지 속 얼굴을 탐지한다.</p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/Itseez/opencv/master/data/haarcascades/haarcascade_eye.xml">Haar 케스케이드 – 눈</a></li>
+<li><a href="https://raw.githubusercontent.com/Itseez/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml">Haar 케스케이드 – 얼굴</a></li>
+</ul>
+<h2 id="파이썬-코드-opencv-haar">2. 파이썬 코드 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></h2>
+<ul>
+<li>얼굴과 눈 케스케이드를 입력받아 저장해 놓는다.</li>
+<li>얼굴과 눈을 인식할 이미지를 불러온다.</li>
+<li>먼저 이미지에서 얼굴을 인식하고 나서 사각형을 그려 넣는다 → 청색(255,0,0)
+<ul>
+<li>얼굴 영역내에서 두 눈의 위치를 식별해 사각형을 위치시킨다 → 노란색(0,255,0)</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> cv2
+ 
+face_cascade <span class="op">=</span> cv2.CascadeClassifier(<span class="st">&#39;cascade/haarcascade_frontalface_default.xml&#39;</span>)
+eye_cascade <span class="op">=</span> cv2.CascadeClassifier(<span class="st">&#39;cascade/haarcascade_eye.xml&#39;</span>)
+ 
+img <span class="op">=</span> cv2.imread(<span class="st">&#39;../fig/female-frontface.jpg&#39;</span>)
+<span class="co">##img = cv2.imread(&#39;../fig/many-frontface.jpg&#39;)</span>
+
+gray <span class="op">=</span> cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+faces <span class="op">=</span> face_cascade.detectMultiScale(gray, <span class="fl">1.2</span>, <span class="dv">1</span>)
+<span class="cf">for</span> (x,y,w,h) <span class="op">in</span> faces:
+    cv2.rectangle(img,(x,y),(x<span class="op">+</span>w,y<span class="op">+</span>h),(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">2</span>)
+    roi_gray <span class="op">=</span> gray[y:y<span class="op">+</span>h, x:x<span class="op">+</span>w]
+    roi_color <span class="op">=</span> img[y:y<span class="op">+</span>h, x:x<span class="op">+</span>w]
+    eyes <span class="op">=</span> eye_cascade.detectMultiScale(roi_gray)
+    <span class="cf">for</span> (ex,ey,ew,eh) <span class="op">in</span> eyes:
+        cv2.rectangle(roi_color,(ex,ey),(ex<span class="op">+</span>ew,ey<span class="op">+</span>eh),(<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">0</span>),<span class="dv">2</span>)
+
+cv2.imshow(<span class="st">&#39;img&#39;</span>,img)
+cv2.waitKey(<span class="dv">0</span>)
+cv2.destroyAllWindows()</code></pre></div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="http://docs.opencv.org/3.1.0/d7/d8b/tutorial_py_face_detection.html">Face Detection using Haar Cascades</a><a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>
