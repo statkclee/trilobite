@@ -50,7 +50,8 @@ subtitle: 고생대 삼엽충의 전성기를 재현
         1. [이미지 파일 정보 살펴보기](cv-image-info.html)
         1. [이미지 합치기](cv-add-images.html)
     1. [OpenCV 맛보기](opencv-start.html)
-    1. [이미지 조합](adding-images.html)
+1. **프로젝트**
+    1. [작업 이미지 긁어오기](cv-img-download.html)
 
 > ### xwMOOC 오픈 교재
 > 
