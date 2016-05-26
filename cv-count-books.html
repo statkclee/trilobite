@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: xwMOOC 고생대 프로젝트</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">xwMOOC 고생대 프로젝트</h1></a>
+          <h2 class="subtitle">이미지에 나온 책이 몇개</h2>
+          <p><a href="https://pythontips.com/2015/03/11/a-guide-to-finding-books-in-images-using-python-and-opencv/">A guide to finding books in images using Python and OpenCV</a> 블로그에 게시된 기사가 평소 관심을 갖고 있던거라 버그가 있어 버그를 수정한 코드로 파이썬2에서 정상 동작하게 만들고 이미지에 들어있는 책이 몇권인지 확인해 봤다.</p>
+<h2 id="실행결과">1. 실행결과</h2>
+<p><img src="fig/how-many-books-ex01.png" alt="책이 몇권" width="50%"></p>
+<pre class="output"><code>I found 4 books in that image</code></pre>
+<p><img src="fig/how-many-books-ex02.png" alt="책이 몇권" width="50%"></p>
+<pre class="output"><code>I found 1 books in that image</code></pre>
+<h2 id="파이썬-opencv-코드">2. 파이썬 openCV 코드</h2>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># import the necessary packages</span>
+<span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> cv2
+
+<span class="co"># load the image, convert it to grayscale, and blur it</span>
+<span class="co">##image = cv2.imread(&quot;example.jpg&quot;)</span>
+<span class="co">##image = cv2.imread(&quot;test01.jpg&quot;)</span>
+<span class="co">##image = cv2.imread(&quot;one-book.jpg&quot;)</span>
+<span class="co">##image = cv2.imread(&quot;one-book-plus.jpg&quot;)</span>
+<span class="co">##image = cv2.imread(&quot;four-books.jpg&quot;)</span>
+image <span class="op">=</span> cv2.imread(<span class="st">&quot;three-books.jpg&quot;</span>)
+gray <span class="op">=</span> cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+gray <span class="op">=</span> cv2.GaussianBlur(gray, (<span class="dv">3</span>, <span class="dv">3</span>), <span class="dv">0</span>)
+cv2.imshow(<span class="st">&quot;Gray&quot;</span>, gray)
+cv2.waitKey(<span class="dv">0</span>)
+
+<span class="co"># detect edges in the image</span>
+edged <span class="op">=</span> cv2.Canny(gray, <span class="dv">10</span>, <span class="dv">250</span>)
+cv2.imshow(<span class="st">&quot;Edged&quot;</span>, edged)
+cv2.waitKey(<span class="dv">0</span>)
+
+<span class="co"># construct and apply a closing kernel to &#39;close&#39; gaps between &#39;white&#39;</span>
+<span class="co"># pixels</span>
+kernel <span class="op">=</span> cv2.getStructuringElement(cv2.MORPH_RECT, (<span class="dv">7</span>, <span class="dv">7</span>))
+closed <span class="op">=</span> cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
+cv2.imshow(<span class="st">&quot;Closed&quot;</span>, closed)
+cv2.waitKey(<span class="dv">0</span>)
+
+<span class="co"># find contours (i.e. the &#39;outlines&#39;) in the image and initialize the</span>
+<span class="co"># total number of books found</span>
+(_, cnts, _) <span class="op">=</span> cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+total <span class="op">=</span> <span class="dv">0</span>
+
+<span class="co"># loop over the contours</span>
+<span class="cf">for</span> c <span class="op">in</span> cnts:
+    <span class="co"># approximate the contour</span>
+    peri <span class="op">=</span> cv2.arcLength(c, <span class="va">True</span>)
+    approx <span class="op">=</span> cv2.approxPolyDP(c, <span class="fl">0.02</span> <span class="op">*</span> peri, <span class="va">True</span>)
+
+    <span class="co"># if the approximated contour has four points, then assume that the</span>
+    <span class="co"># contour is a book -- a book is a rectangle and thus has four vertices</span>
+    <span class="cf">if</span> <span class="bu">len</span>(approx) <span class="op">==</span> <span class="dv">4</span>:
+        cv2.drawContours(image, [approx], <span class="op">-</span><span class="dv">1</span>, (<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">0</span>), <span class="dv">4</span>)
+        total <span class="op">+=</span> <span class="dv">1</span>
+
+<span class="co"># display the output</span>
+<span class="bu">print</span> <span class="st">&quot;I found </span><span class="sc">{0}</span><span class="st"> books in that image&quot;</span>.<span class="bu">format</span>(total)
+cv2.imshow(<span class="st">&quot;Output&quot;</span>, image)
+cv2.waitKey(<span class="dv">0</span>)</code></pre></div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>
