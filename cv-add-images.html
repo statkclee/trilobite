@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: xwMOOC 고생대 프로젝트</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">xwMOOC 고생대 프로젝트</h1></a>
+          <h2 class="subtitle">이미지 합치기</h2>
+          <p>서로 다른 두가지 이미지를 가지고 이를 결합하여 새로운 이미지를 만드는 과정을 설명한다.</p>
+<ol style="list-style-type: decimal">
+<li>두 이미지를 다운로드 받아 로컬컴퓨터에 저장한다.</li>
+<li>배경 이미지(큰 이미지)와 앞에 강조될 이미지(작은 이미지) 정보를 확인한다.
+<ul>
+<li>작은 이미지 크기를 작게 축소한다.</li>
+</ul></li>
+<li>작은 이미지를 큰 이미지 행렬에 오프셋을 두고 해당 크기만큼 치환한다.</li>
+</ol>
+<p><img src="fig/image-addition.png" alt="두 이미지 결합" width="40%"></p>
+<h2 id="결합할-이미지-대상">1. 결합할 이미지 대상</h2>
+<p>이미지넷에서 검색한 <a href="http://farm3.static.flickr.com/2605/3865434892_257e8067d7.jpg">하늘 이미지</a>와 구글 이미지 검색에서 <a href="https://upload.wikimedia.org/wikipedia/en/c/cb/Raspberry_Pi_Logo.svg">라즈베리 파이 로고</a> 두가지 이미지를 다운로드 받아 로컬 컴퓨터에 저장한다.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">큰 이미지</th>
+<th align="left">작은 이미지</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><img src="fig/sky.jpg" alt="이미지넷 하늘 이미지" width="50%"></td>
+<td align="left"><img src="fig/raspberry-pi-logo.png" alt="라즈베리 파이 로고 이미지" width="20%"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="두-이미지-정보-확인">2. 두 이미지 정보 확인</h2>
+<p><code>sky.jpg</code> 이미지와 <code>raspberry-pi-logo.png</code> 이미지 크기를 살펴보면 배경 하늘 이미지보다 로고 이미지가 훨씬 더 큰 것을 확인할 수 있다. 따라서 이를 축소할 필요가 있다.</p>
+<pre class="output"><code>===== Original Image Info =====
+Sky Image :  (333, 500, 3)
+RP Image  :  (599, 474, 3)</code></pre>
+<h2 id="로고-이미지-축소">3. 로고 이미지 축소</h2>
+<p>로고 이미지를 <span class="math inline">\(\frac {1}{10}\)</span> 비율로 축소한다. 축소된 이미지 정보는 다음과 같다.</p>
+<pre class="output"><code>===== Resized RP Logo Image Info =====
+RP Image  :  (60, 47, 3)</code></pre>
+<h2 id="이미지-합치기">4. 이미지 합치기</h2>
+<p>다양한 방법이 있지만, 배경하늘 이미지도 큰 행렬로 큰 행렬 특정 위치에 로고 이미지를 치환하여 두 이미지를 합치는 전략을 취한다. 먼저 오프셋을 두고 <code>x</code>, <code>y</code> 방향으로 10만큼 두고 이미지 크기에 해당되는 부분에 자리를 로고 이미지로 치환한다.</p>
+<h2 id="전체-코드">5. 전체 코드</h2>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> cv2
+
+skyImg <span class="op">=</span> cv2.imread(<span class="st">&#39;../fig/sky.jpg&#39;</span>,<span class="dv">1</span>)
+rplogoImg <span class="op">=</span> cv2.imread(<span class="st">&#39;../fig/raspberry-pi-logo.png&#39;</span>,<span class="dv">1</span>)
+
+<span class="co">## Image info</span>
+<span class="bu">print</span> <span class="st">&#39;===== Original Image Info =====&#39;</span>
+<span class="bu">print</span> <span class="st">&#39;Sky Image : &#39;</span>, skyImg.shape
+<span class="bu">print</span> <span class="st">&#39;RP Image  : &#39;</span>, rplogoImg.shape
+
+<span class="co">## Image Resize</span>
+rplogoImgDownscale <span class="op">=</span> cv2.resize(rplogoImg, <span class="va">None</span>,
+                                fx<span class="op">=</span><span class="fl">0.1</span>, fy<span class="op">=</span><span class="fl">0.1</span>, interpolation<span class="op">=</span>cv2.INTER_AREA)
+
+<span class="bu">print</span> <span class="st">&#39;===== Resized RP Logo Image Info =====&#39;</span>
+<span class="bu">print</span> <span class="st">&#39;RP Image  : &#39;</span>, rplogoImgDownscale.shape
+
+<span class="co">## Image Addition</span>
+x_offset <span class="op">=</span> y_offset <span class="op">=</span> <span class="dv">10</span>
+skyImg[y_offset:y_offset <span class="op">+</span> rplogoImgDownscale.shape[<span class="dv">0</span>],
+       x_offset:x_offset <span class="op">+</span> rplogoImgDownscale.shape[<span class="dv">1</span>]] <span class="op">=</span> rplogoImgDownscale
+
+<span class="co">## Result</span>
+cv2.imshow(<span class="st">&#39;Sky with RP Logo&#39;</span>, skyImg)
+cv2.waitKey(<span class="dv">0</span>)
+
+cv2.destroyAllWindows()</code></pre></div>
+<h2 id="하나-더-stackoverflow-add-images">6. 하나 더 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></h2>
+<p>알파채널을 이용하여 위에서 나온 검정색 사각형 부분을 제거하고, 두 이미지를 결합하는 코드</p>
+<p><img src="fig/image-addition-alpha.png" alt="두 이미지 결합" width="40%"></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> cv2
+
+skyImg <span class="op">=</span> cv2.imread(<span class="st">&#39;../fig/sky.jpg&#39;</span>, <span class="op">-</span><span class="dv">1</span>)
+rplogoImg <span class="op">=</span> cv2.imread(<span class="st">&#39;../fig/raspberry-pi-logo.png&#39;</span>, <span class="op">-</span><span class="dv">1</span>)
+
+<span class="co">## Image info</span>
+<span class="bu">print</span> <span class="st">&#39;===== Original Image Info =====&#39;</span>
+<span class="bu">print</span> <span class="st">&#39;Sky Image : &#39;</span>, skyImg.shape
+<span class="bu">print</span> <span class="st">&#39;RP Image  : &#39;</span>, rplogoImg.shape
+
+<span class="co">## Image Resize</span>
+rp <span class="op">=</span> cv2.resize(rplogoImg, <span class="va">None</span>, fx<span class="op">=</span><span class="fl">0.1</span>, fy<span class="op">=</span><span class="fl">0.1</span>, interpolation<span class="op">=</span>cv2.INTER_AREA)
+                                
+<span class="bu">print</span> <span class="st">&#39;===== Resized RP Logo Image Info =====&#39;</span>
+<span class="bu">print</span> <span class="st">&#39;RP Image  : &#39;</span>, rp.shape
+
+<span class="co">## Image Addtion with Alpha</span>
+x_offset <span class="op">=</span> y_offset <span class="op">=</span> <span class="dv">10</span>
+<span class="cf">for</span> c <span class="op">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">3</span>):
+    skyImg[y_offset:y_offset<span class="op">+</span>rp.shape[<span class="dv">0</span>], x_offset:x_offset<span class="op">+</span>rp.shape[<span class="dv">1</span>], c] <span class="op">=</span> <span class="op">\</span>
+    rp[:,:,c] <span class="op">*</span> (rp[:,:,<span class="dv">3</span>]<span class="op">/</span><span class="fl">255.0</span>) <span class="op">+</span> <span class="op">\</span>
+    skyImg[y_offset:y_offset<span class="op">+</span>rp.shape[<span class="dv">0</span>], x_offset:x_offset<span class="op">+</span>rp.shape[<span class="dv">1</span>], c] <span class="op">*</span> (<span class="fl">1.0</span> <span class="op">-</span> rp[:,:,<span class="dv">3</span>]<span class="op">/</span><span class="fl">255.0</span>)
+    
+<span class="co">## Result</span>
+cv2.imshow(<span class="st">&#39;Sky and RP Logo with alpha transparency &#39;</span>, skyImg)
+cv2.waitKey(<span class="dv">0</span>)
+
+cv2.destroyAllWindows()</code></pre></div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="http://stackoverflow.com/questions/14063070/overlay-a-smaller-image-on-a-larger-image-python-opencv">overlay a smaller image on a larger image python OpenCv</a><a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>

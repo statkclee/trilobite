@@ -48,6 +48,7 @@ subtitle: 고생대 삼엽충의 전성기를 재현
     1. [작업 파이프라인](cv-pipeline.html)    
         1. [이미지 파일 가져오기](cv-import.html)
         1. [이미지 파일 정보 살펴보기](cv-image-info.html)
+        1. [이미지 합치기](cv-add-images.html)
     1. [OpenCV 맛보기](opencv-start.html)
     1. [이미지 조합](adding-images.html)
 
