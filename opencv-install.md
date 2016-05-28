@@ -35,7 +35,26 @@ subtitle: OpenCV 설치
     * `환경변수`에 `C:\opencv` 디렉토리를 위치를 운영체제에 알려준다.
     * 제어판 &rarr; 시스템 &rarr; 고급 시스템 설정 &rarr; 환경변수 &rarr; 시스템변수 &rarr; 편집 &rarr; `C:\opencv` 추가 &rarr; 확인
 
-## 2. 우분투 
+## 2. 맥(OS X) [^mac-opencv]
+
+[^mac-opencv]: [Install OpenCV 3.0 and Python 2.7+ on OSX](http://www.pyimagesearch.com/2015/06/15/install-opencv-3-0-and-python-2-7-on-osx/)
+
+맥(OSX)에서 openCV를 설치하는 방식은 다음과 같다. 먼저 맥 운영체제 버젼을 확인한다.
+
+~~~ {.shell}
+$ sw_vers
+~~~ 
+
+~~~ {.output}
+ProductName:	Mac OS X
+ProductVersion:	10.11.3
+BuildVersion:	15D21
+~~~
+
+운영체제 버젼을 확인하고, 설치된 파이썬2 혹은 파이썬3를 확인 후에 openCV를 설치한다.
+
+1. xcode를 설치한다.
+1. [Homebrew](http://brew.sh)를 설치한다.
 
 
 ## 3. 공통 이미지 라이브러리 설치
