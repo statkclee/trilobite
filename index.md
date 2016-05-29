@@ -51,6 +51,7 @@ subtitle: 고생대 삼엽충의 전성기를 재현
         1. [이미지 합치기](cv-add-images.html)
     1. [OpenCV 맛보기](opencv-start.html)
 1. **프로젝트**
+    1. [이미지 처리 작업흐름](skimage-workflow.html)
     1. [작업 이미지 긁어오기](cv-img-download.html)
     1. [이미지 한개 변환작업](cv-img-conversion.html)
     1. [이미지 다수 변환작업](cv-imgs-conversion.html)

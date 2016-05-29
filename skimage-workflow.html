@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: xwMOOC 고생대 프로젝트</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">xwMOOC 고생대 프로젝트</h1></a>
+          <h2 class="subtitle">이미지 처리 작업흐름</h2>
+          <h2 id="파이썬-이미지-분석-작업-흐름-image-analysis-90">1. 파이썬 이미지 분석 작업 흐름 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></h2>
+<p><img src="fig/image-analysis-workflow.png" alt="이미지 분석 작업흐름" width="100%"></p>
+<p>이미지 작업을 수행하는 방식은 원본 이미지를 전처리 과정으로 흑백(grayscale)으로 변환하는 것으로 시작한다. 두번째 단계로 필터링을 통해 모서리와 색깔부분을 탐지하고 나서, 한계치를 설정해서 2치화를 수애하고 나서 모양을 정제 후 모양을 분석하는 순서로 순차적으로 진행된다.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h3 id="파이썬-이미지-분석-라이브러리"><span class="glyphicon glyphicon-pushpin"></span>파이썬 이미지 분석 라이브러리</h3>
+</div>
+<div class="panel-body">
+<ul>
+<li>핵심 이미지 분석 라이브러리
+<ul>
+<li>Numpy: 수치데이터(행렬) 연산
+<ul>
+<li>일반 이미지(8비트, 0~255), 과학 이미지(16비트, 0~65535)</li>
+<li>C언어를 벡엔드 사용해서 빠르고, 구문은 Matlab 유사.</li>
+</ul></li>
+<li>Scipy: ndimage, 신호처리, 최적화</li>
+<li>Matplotlib: 기본 그래프 및 플롯팅
+<ul>
+<li>중요한 도식화함수: <code>imread</code>, <code>imsave</code>, <code>imshow</code>, <code>plot</code></li>
+<li>주의: 좌표는 <span class="math inline">\((x,y)\)</span>로 표현되지만, 행렬은 <span class="math inline">\((행,열)\)</span>로 표현 즉, <code>imshow</code> <code>y</code>축에 원점이 상단에 위치하게 되어 <code>y</code> 축이 위와 아래가 뒤집힌다.</li>
+</ul></li>
+<li>Scikit-image: 잘 만든 이미지 분석 라이브러리</li>
+</ul></li>
+<li>추가 유용한 소프트웨어 도구
+<ul>
+<li>ipython: 파이썬 개발환경</li>
+<li>Scikit-learn: 범용 기계학습</li>
+<li>OpenCV: Scikit-image보다 사용법이 어렵지만 강력하고 실시간 응용프로그램에 적합</li>
+<li>ITK: 3D 분석, 주로 의료영상</li>
+<li>GIMP: 돈없는 사람을 위한 파이썬</li>
+</ul></li>
+</ul>
+</div>
+</aside>
+<h2 id="단계별-파이썬-이미지-분석-작업흐름-cv-book01cv-book02cv-book03">2. 단계별 파이썬 이미지 분석 작업흐름 <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a><a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a><a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></h2>
+<h3 id="전처리-과정">2.1. 전처리 과정</h3>
+<p>전처리 과정으로 원본 이미지를 흑백으로 처리하는 것은 간단하다.</p>
+<h3 id="필터링filtering">2.2. 필터링(Filtering)</h3>
+<p>필터링은 또다른 이미지를 생성하기 위해서 이미지에 처리작업을 가하는 것으로 정의된다. 기본적인 아이디어는 작은 정사각형, 이를 “커널(kernel)”이라고 부른다. 이 커널을 이미지 위에 쭉 이동시키는 것을 “합성곱(convolution)” 이라고 부른다. 빨간색 출력값을 계산하기 위해서 입력값을 커널과 곱하고 나서 합한다. 이를 합성곱으로 쭉이어 나가면 필터를 적용한 결과를 얻게 된다.</p>
+<p><img src="fig/image-analysis-filtering.png" alt="이미지 분석 필터링" width="40%"></p>
+<p><span class="math display">\[출력_{이미지} = 커널 \times 입력_{이미지}\]</span></p>
+<ul>
+<li>흐리게(Blurring) 기능은 주변 픽셀을 평균하는 것을 의미한다. 적당히 흐리게 하면 잡음을 제거하는 효과가 크지만, 너무 많이 제거하게 되면 중요한 정보손실로 이어진다. 주변 픽셀에 모두 동일한 값을 주게되면 일양분포 필터가 되고, 2차원 가우스 정규분포를 적용하면 좀더 깔끔하게 처리된다.</li>
+<li>기울기(Gradient)는 이미지 기울기(변화량) 측도로서, 만약 기울기가 크다면 이미지 모양의 모서리가 됨을 나타나게 된다. 수직기울기는 윗쪽 픽셀에서 아래쪽 픽셀을 빼면 되고, 수평기울기는 왼쪽에서 오른쪽으로 빼면 되고, 모든 방향에서 계산하는 소벨(Sobel) 필터를 통해 모서리를 추출한다.</li>
+<li>특정 영역 픽셀이 주변 픽셀보다 밝다면 해당 영역을 “색깔영역(blob)”이라고 간주할 수 있다.</li>
+</ul>
+<h3 id="치화binarization">2.3. 2치화(Binarization)</h3>
+<p>필터링을 거치게 되면 관심있는 영역은 더 밝아지고, 그외 지역은 더 어두워진 이미지가 산출된다. 적절한 한계값을 설정하고 적용하면, 한계값보다 큰 것은 흰색으로 설정되고, 어두운 픽셀은 검정색으로 설정된다. 한계값은 일반적으로 히스토그램을 그려서 모양을 보고 설정하게 된다.</p>
+<h3 id="모폴로지morphology">2.4. 모폴로지(Morphology)</h3>
+<p>한계값을 설정하고 2치화 작업을 완료하게 되면 겉으로만 그럴싸한 작은 반점과 구멍이 많이 생기게 된다. 2치화된 이미지를 정제하는데 유용한 기능이 <strong>모폴로지(Morphology)</strong> 다.</p>
+<ul>
+<li>확장(Dilation): 흰색 물체를 더 크게 만듦.</li>
+<li>침식(Erosion): 흰색 물체를 더 여위게 만듦.</li>
+<li>구멍내기(Opening): 흰색 물체 사이 공간을 확장</li>
+<li>구멍매우기(Closing): 검정 구명을 채움.</li>
+</ul>
+<p>확장과 침식이 기본 모폴로지 연산자가 되고, 구멍내기와 구멍매우기는 확장과 침식연산을 조합한 것으로 볼 수 이따.</p>
+<p><code>scikit-image</code> 모폴로지와 측정 라이브러리에는 다음 기능이 포함되어 있다</p>
+<ul>
+<li>물체에 표식하는 기능(Labeling)</li>
+<li>물체 (추적을 위해) 중심점 계산</li>
+<li>물체 면적 계산</li>
+<li>아주 작은 물체 제거 기능 → 통상 잡음으로 간주됨.</li>
+<li>물체 형태를 특징짓는 기능</li>
+</ul>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://github.com/brikeats/Image-Analysis-in-Python">Image Analysis in Python</a><a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><a href="http://store.elsevier.com/Computer-and-Machine-Vision/E_-R_-Davies/isbn-9780123869081/">E Davies (2012), “Computer and Machine Vision: Theory, Algorithms, Practicalities”, Academic Press</a><a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p><a href="http://szeliski.org/Book/">Richard Szeliski (2010), “Computer Vision: Algorithms and Applications”, Springer</a><a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p><a href="http://www.computervisionmodels.com/">Simon J.D. Prince (2012), “Computer Vision: Models, Learning, and Inference”, Cambridge University Press</a><a href="#fnref4">↩</a></p></li>
+</ol>
+</div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  </body>
+</html>
