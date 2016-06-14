@@ -61,6 +61,8 @@ subtitle: 고생대 삼엽충의 전성기를 재현
 1. [자동차 탐지](cv-car-detect.html)
 1. **Scikit-Image**
     1. [이미지는 배열](skimage-numpy.html)
+1. **구글 클라우드 비젼(Google Cloud Vision) API**    
+    1. [구글 클라우드 비젼 설치 및 헬로우 월드](gcv-hello-world.html)
 
 > ### xwMOOC 오픈 교재
 > 
