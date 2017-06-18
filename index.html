@@ -4,35 +4,35 @@
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
     <title>Software Carpentry: xwMOOC 고생대 프로젝트</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="css/swc.css" />
-    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
-    <meta charset="UTF-8" />
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    
-      ga('create', 'UA-59802572-17', 'auto');
-      ga('send', 'pageview');
-    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-59802572-17', 'auto');
+      ga('send', 'pageview');
+    
     </script>
   </head>
   <body class="lesson">
     <div class="container card">
-      <div class="banner">
-        <a href="http://software-carpentry.org" title="Software Carpentry">
-          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
-        </a>
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
       </div>
       <article>
       <div class="row">
@@ -49,61 +49,66 @@
 </div>
 </section>
 <p><img src="fig/python-cv-toolchain.png" alt="파이썬 컴퓨터 비젼 툴체인" width="70%"></p>
-<p>물리적 세계를 다양한 카메라 기술을 사용해서 디지털 데이터로 변환을 한 후에 이를 최종상품 형태로 제공하기 전에 다양한 시각정보를 가공, 처리, 생성하는 과정을 거치게 된다. 만약 파이썬 언어로 이를 통합적으로 구성할 경우를 살펴보자.</p>
-<p>고생대 참엽충의 전성기 재현하는데 사용되는 파이썬 팩키지는 다음과 같다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>물리적 세계를 다양한 카메라 기술을 사용해서 디지털 데이터로 변환을 한 후에 이를 최종상품 형태로 제공하기 전에 다양한 시각정보를 가공, 처리, 생성하는 과정을 거치게 된다. 만약 각종 데이터를 효과적이고 효율적으로 처리하는 R과 파이썬 언어로 이를 통합적으로 이해하고 실용적인 사례를 만들어보자.</p>
+<p>고생대 참엽충의 전성기 재현하는데 사용되는 R 팩키지와 파이썬 라이브러리와 작업흐름 파이프라인은 다음과 같다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <section class="getready panel panel-warning">
 <div class="panel-heading">
-<h3 id="파이썬-컴퓨터-비전-도구-모음"><span class="glyphicon glyphicon-check"></span>파이썬 컴퓨터 비전 도구 모음</h3>
+<h3 id="r-파이썬-컴퓨터-비전-도구-모음"><span class="glyphicon glyphicon-check"></span>R &amp; 파이썬 컴퓨터 비전 도구 모음</h3>
 </div>
 <div class="panel-body">
 <ul>
-<li><strong>맨손으로 시작</strong>
+<li><strong>자료구조와 데이터 다루는 도구</strong>
 <ul>
-<li><a href="http://www.numpy.org/">Numpy</a>: 이미지는 결국 다차원 행렬로 행렬제어를 통해 이미지를 제어.</li>
-<li><a href="http://scipy.org/">Scipy</a>: 결국, 거리를 측정하여 두개 이상의 이미지 유사성 일치도를 파악하고 분류하는데 필요.</li>
+<li>파이썬: <a href="http://www.numpy.org/">Numpy</a>: 이미지는 결국 다차원 행렬로 행렬제어를 통해 이미지를 제어.</li>
+<li>R: <a href="http://tidyverse.org/">The tidyverse</a>: 깔끔한 데이터 우주.</li>
 </ul></li>
-<li><strong>입출력</strong>
-<ul>
-<li><a href="http://matplotlib.org/">matplotlib</a></li>
-</ul></li>
-<li><strong>이미지 처리</strong>
+<li><strong>이미지 처리와 컴퓨터 비젼</strong>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Python_Imaging_Library">Python Imaging Library(PIL)</a>: <a href="http://python-pillow.org/">Python Pillow</a>는 <a href="http://www.pythonware.com/products/pil/">PIL</a> 포크</li>
-</ul></li>
-<li><strong>컴퓨터 비젼</strong>
-<ul>
+<li>R: <a href="https://github.com/aoles/EBImage">EBImage</a>, <a href="https://github.com/ropensci/magick">magick</a>, <a href="https://github.com/dahtah/imager">imager</a></li>
 <li><a href="http://opencv.org/">OpenCV</a>: 오픈 컴퓨터 비젼</li>
 <li><a href="http://simplecv.org/">SimpleCV</a>: OpenCV를 쉽고 편하게.</li>
 <li><a href="http://scikit-learn.org/stable/">Scikit-learn</a>: 파이썬 기계학습</li>
 <li><a href="http://luispedro.org/software/mahotas">mahotas</a>: <a href="https://%20en.wikipedia.org/wiki/Bioimage_informatics">생명정보 이미지</a></li>
 <li><a href="http://www.ilastik.org/">ilastik</a>: interactive learning and segmentation toolkit</li>
 </ul></li>
+<li><strong>시각화</strong>
+<ul>
+<li>파이썬: <a href="http://matplotlib.org/">matplotlib</a>, bokeh</li>
+<li>R: ggplot2, lattice, base 시각화 시스템</li>
+</ul></li>
+<li><strong>기계학습</strong>
+<ul>
+<li><a href="http://scipy.org/">Scipy</a>: 결국, 거리를 측정하여 두개 이상의 이미지 유사성 일치도를 파악하고 분류하는데 필요.</li>
+<li><a href="https://github.com/topepo/caret">caret</a></li>
+<li><a href="https://github.com/h2oai/h2o-3"><span class="math inline">\(H_2 O\)</span></a></li>
+</ul></li>
 </ul>
 </div>
 </section>
 <h2 id="학습-목차">학습 목차</h2>
 <ol style="list-style-type: decimal">
-<li><strong>준비 및 설치</strong>
+<li><strong>이미지 분석 및 처리를 위한 기초: 파이썬</strong>
 <ol style="list-style-type: decimal">
-<li><a href="cv-intro.html">들어가며</a></li>
-<li><a href="opencv-install.html">OpenCV 설치</a></li>
-</ol></li>
-<li><strong>컴퓨터 비젼 도구 없이 맨손으로</strong>
-<ol style="list-style-type: decimal">
-<li><a href="basic-linear-algebra.html">선형대수</a></li>
-<li><a href="image-files.html">컴퓨터가 보는 이미지</a><br />
+<li><a href="cv-intro.html">이미지 파일이 왜 큰가?</a></li>
+<li><a href="basic-linear-algebra.html">이미지 분석을 위한 수학: 선형대수</a>
+<ul>
+<li><strong>Scikit-Image:</strong> <a href="skimage-numpy.html">이미지는 배열</a></li>
+</ul></li>
+<li><a href="image-files.html">컴퓨터가 보는 이미지: 흑백, RBG</a><br />
 </li>
+<li><a href="opencv-install.html">OpenCV 설치 및 헬로우 월드</a></li>
 </ol></li>
-<li><strong>맛보기</strong>
-<ol style="list-style-type: decimal">
-<li><a href="cv-hello-world.html">헬로 월드</a></li>
-<li><a href="cv-pipeline.html">작업 파이프라인</a>
+<li><a href="cv-pipeline.html">이미지 작업 파이프라인</a>
 <ol style="list-style-type: decimal">
 <li><a href="cv-import.html">이미지 파일 가져오기</a></li>
 <li><a href="cv-image-info.html">이미지 파일 정보 살펴보기</a></li>
 <li><a href="cv-add-images.html">이미지 합치기</a></li>
+<li>이미지 처리 자동화
+<ol style="list-style-type: decimal">
+<li><a href="cv-img-download.html">작업 이미지 긁어오기</a></li>
+<li><a href="cv-img-conversion.html">이미지 한개 변환작업</a></li>
 </ol></li>
-<li><a href="opencv-start.html">OpenCV 맛보기</a></li>
 </ol></li>
 <li><strong>프로젝트</strong>
 <ol style="list-style-type: decimal">
@@ -111,24 +116,14 @@
 <ol style="list-style-type: decimal">
 <li><a href="skimage-coins.html">사진에 나온 미국동전 합계 계산</a></li>
 </ol></li>
-<li><a href="cv-img-download.html">작업 이미지 긁어오기</a></li>
-<li><a href="cv-img-conversion.html">이미지 한개 변환작업</a></li>
-<li><a href="cv-imgs-conversion.html">이미지 다수 변환작업</a></li>
-</ol></li>
 <li><a href="cv-count-books.html">이미지에 나온 책이 몇개</a></li>
 <li><a href="cv-face-detection.html">얼굴인식-Cascade</a></li>
 <li><a href="cv-car-detect.html">자동차 탐지</a></li>
-<li><strong>Scikit-Image</strong>
-<ol style="list-style-type: decimal">
-<li><a href="skimage-numpy.html">이미지는 배열</a></li>
-</ol></li>
-<li><strong>구글 클라우드 비젼(Google Cloud Vision) API</strong>
-<ol style="list-style-type: decimal">
-<li><a href="gcv-hello-world.html">구글 클라우드 비젼 설치 및 헬로우 월드</a></li>
-</ol></li>
-<li><strong>물고기</strong>
-<ol style="list-style-type: decimal">
 <li><a href="cv-flatfish.html">물고기 인식</a></li>
+</ol></li>
+<li><strong>APIs</strong>
+<ol style="list-style-type: decimal">
+<li><a href="gcv-hello-world.html">구글 클라우드 비젼(Google Cloud Vision API) 설치 및 헬로우 월드</a></li>
 </ol></li>
 </ol>
 <blockquote>
@@ -169,16 +164,16 @@
         </div>
       </div>
       </article>
-      <div class="footer">
-        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
-        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
-        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
-        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
       </div>
     </div>
-    <!-- Javascript placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
   </body>
 </html>
