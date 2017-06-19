@@ -50,7 +50,6 @@ subtitle: 고생대 삼엽충의 전성기를 재현
     1. [컴퓨터가 보는 이미지: 흑백, RBG](image-files.html)    
     1. [OpenCV 설치 및 헬로우 월드](opencv-install.html)
 1. [이미지 작업 파이프라인](cv-pipeline.html)
-    1. [이미지 처리 101 - 건축학개론](cv-architecture-101.html)
     1. [이미지 파일 가져오기](cv-import.html)
     1. [이미지 파일 정보 살펴보기](cv-image-info.html)
     1. [이미지 합치기](cv-add-images.html)
@@ -58,7 +57,7 @@ subtitle: 고생대 삼엽충의 전성기를 재현
         1. [작업 이미지 긁어오기](cv-img-download.html)
         1. [이미지 한개 변환작업](cv-img-conversion.html)
 1. **R 이미지 영상**
-    1. [R 이미지 데이터 다루기 101](r-image-101.html)
+    1. [이미지 처리 101 - 건축학개론](cv-architecture-101.html)
 1. **프로젝트**
     1. [이미지 처리 작업흐름](skimage-workflow.html)
         1. [사진에 나온 미국동전 합계 계산](skimage-coins.html)
