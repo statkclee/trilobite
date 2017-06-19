@@ -56,6 +56,8 @@ subtitle: 고생대 삼엽충의 전성기를 재현
     1. 이미지 처리 자동화
         1. [작업 이미지 긁어오기](cv-img-download.html)
         1. [이미지 한개 변환작업](cv-img-conversion.html)
+1. **R 이미지 영상**
+    1. [R 이미지 데이터 다루기 101](r-image-101.html)
 1. **프로젝트**
     1. [이미지 처리 작업흐름](skimage-workflow.html)
         1. [사진에 나온 미국동전 합계 계산](skimage-coins.html)
@@ -63,6 +65,8 @@ subtitle: 고생대 삼엽충의 전성기를 재현
     1. [얼굴인식-Cascade](cv-face-detection.html)
     1. [자동차 탐지](cv-car-detect.html)
     1. [물고기 인식](cv-flatfish.html)
+    1. [사진속 나이 추정](http://statkclee.github.io/deep-learning/ms-oxford-age.html)
+    1. [동영상 감정 분석](http://statkclee.github.io/deep-learning/ms-oxford-video.html)
 1. **APIs**    
     1. [구글 클라우드 비젼(Google Cloud Vision API) 설치 및 헬로우 월드](gcv-hello-world.html)
 
