@@ -21,13 +21,13 @@ subtitle: 고생대 삼엽충의 전성기를 재현
 
 <iframe width="300" height="180" src="https://www.youtube.com/embed/7Xs3auqcX7k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-<img src="fig/python-cv-toolchain.png" alt="파이썬 컴퓨터 비젼 툴체인" width="70%">
-
 물리적 세계를 다양한 카메라 기술을 사용해서 디지털 데이터로 변환을 한 후에 이를 최종상품 형태로 제공하기 전에
 다양한 시각정보를 가공, 처리, 생성하는 과정을 거치게 된다. 
 만약 각종 데이터를 효과적이고 효율적으로 처리하는 R과 파이썬 언어로 이를 통합적으로 이해하고 실용적인 사례를 만들어보자.
 
 고생대 참엽충의 전성기 재현하는데 사용되는 R 팩키지와 파이썬 라이브러리와 작업흐름 파이프라인은 다음과 같다. [^python-cv-lib]
+
+<img src="fig/python-cv-toolchain.png" alt="파이썬 컴퓨터 비젼 툴체인" width="70%">
 
 [^python-cv-lib]: [My Top 9 Favorite Python Libraries for Building Image Search Engines](http://www.pyimagesearch.com/2014/01/12/my-top-9-favorite-python-libraries-for-building-image-search-engines/)
 
