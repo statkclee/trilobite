@@ -5,9 +5,7 @@ subtitle: 이미지 처리 101 - 건축학개론
 output:
   html_document: 
     toc: yes
-    keep_md: yes
-  pdf_document:
-    latex_engine: xelatex
+    toc_float: true
 mainfont: NanumGothic
 ---
 
@@ -23,7 +21,9 @@ options(dplyr.width = 120)
 options(dplyr.print_max = 1e9)
 ```
 
-## 1. 이미지 처리 101 - `EBImage` R 팩키지 [^image-analysis-EBImage] [^introduction-to-EBImage]
+# 1. 이미지 처리 101 - `EBImage` R 팩키지 [^image-analysis-EBImage] [^introduction-to-EBImage] [^image-analysis] {#image-101}
+
+[^image-analysis]: [EBImage - Image Analysis and Processing with R](https://www.youtube.com/watch?v=dKgEDAUUtoo)
 
 [^image-analysis-EBImage]: [R: Image Analysis using EBImage](https://alstatr.blogspot.kr/2014/09/r-image-analysis-using-ebimage.html)
 
@@ -43,7 +43,7 @@ options(dplyr.print_max = 1e9)
 - 저역(低域) 필터(Low-pass Filter)를 적용하여 잡음 노이즈를 제거하거나 이미지를 부드럽게 한다.
 
 
-## 2. 이미지 불러오고 정보 확인
+# 2. 이미지 불러오고 정보 확인 {#image-open}
 
 `EBImage` 팩키지는 bioconductor 프로젝트의 일환으로 해당 생태계의 일환으로 `bioconductor`에 맞춰 팩키지를 설치한다.
 
@@ -57,23 +57,25 @@ library(EBImage)
 # 1. 이미지 불러오기 ---------------------------------------- 
 
 arch_101 <- readImage("fig/architecture_101.png")
+rpi_logo <- readImage("fig/raspberrypi-logo.png")
 
 # 2. 이미지 미리보기 및 정보 ---------------------------------------- 
 
 EBImage::display(arch_101, method="raster")
 # EBImage::display(arch_101, method="browser")
 print(arch_101)
+
+hist(arch_101)
 ```
 
-## 3. 이미지 밝기와 명도 조정 
+# 3. 색상 조정  {#image-color-mgmt}
 
 이미지를 불러오면 이미지에 4칙 연산과 승수연산을 통해 
 밝기와 명도를 조정하고 감마($\gamma$) 값을 조절하여 이미지를 다양하게 표현할 수 있다.
 
-### 3.1. 밝기와 명도 조정
+## 3.1. 밝기 조정(lightness) {#image-color-mgmt-lightness}
 
-
-``` {r arch-101-brightness-contrast}
+``` {r arch-101-brightness}
 # 3. 밝기 조정 ---------------------------------------- 
 
 arch_101_plus <- arch_101 + 0.5
@@ -86,7 +88,11 @@ EBImage::display(arch_101, method="raster")
 text(x = 20, y = 20, label = "건축학 개론 원본", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
 EBImage::display(arch_101_minus, title="건축학 개론 밝기 0.5 감소", method="raster")
 text(x = 20, y = 20, label = "건축학 개론 밝기 0.5 감소", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
+```
 
+## 3.2. 명도 조정(contrast) {#image-color-mgmt-contrast}
+
+``` {r arch-101-contrast}
 # 4. 명도 조정 ---------------------------------------- 
 arch_101_div  <- arch_101 * 0.7
 arch_101_mult <- arch_101 * 1.5
@@ -100,7 +106,7 @@ EBImage::display(arch_101_mult, title="건축학 개론 밝기 0.5 감소", meth
 text(x = 20, y = 20, label = "건축학 개론 명도 150% ", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
 ```
 
-### 3.2. 이미지 감마($\gamma$) 보정
+## 3.3. 이미지 감마($\gamma$) 보정 (Gamma Correction) {#image-color-mgmt-gamma}
 
 ``` {r arch-101-gamma}
 # 5. 감마 보정(Gamma Correction) ---------------------------------------- 
@@ -116,16 +122,80 @@ EBImage::display(arch_101_gamma_growth, title="건축학 개론 밝기 0.5 감�
 text(x = 20, y = 20, label = expression(paste("건축학 개론 감마: ", gamma ^0.5)), adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
 ```
 
-## 4. 이미지 잘라내고, 회전, 이동
+## 3.4. 밝기, 명도, 감마($\gamma$) 보정 (Gamma Correction) {#image-color-mgmt-all}
+
+``` {r arch-101-all}
+## 3.4. 밝기, 명도, 감마 ---------------------------------------- 
+arch_101_pos <- ((arch_101 ^ 2) * 2) +0.5
+arch_101_neg <- ((arch_101 ^ 0.5) * 0.5) - 0.1
+
+EBImage::display(arch_101_pos, method="raster")
+text(x = 20, y = 20, label = expression(paste("건축학 개론 감마: ", 2, gamma ^2, +0.5)), adj = c(0,1), col = "blue", cex = 2)
+EBImage::display(arch_101, method="raster")
+text(x = 20, y = 20, label = "건축학 개론 원본", adj = c(0,1), col = "blue", cex = 2)
+EBImage::display(arch_101_neg, title="건축학 개론 밝기 0.5 감소", method="raster")
+text(x = 20, y = 20, label = expression(paste("건축학 개론 감마: ", 0.5, gamma ^0.5, -0.1)), adj = c(0,1), col = "blue", cex = 2)
+```
+
+## 3.5. 천연색상과 흑백 {#image-color-mgmt-bw}
+
+대표적으로 이미지의 색상을 빼고 흑백으로만 다루고자 할 경우 활용한다.
+
+``` {r arch-101-bw}
+# 4. 색상 관리(Color Management) ---------------------------------------- 
+## 4.1. 흑백과 천연색상
+par(mfrow=c(1,2))
+colorMode(arch_101) <- Grayscale
+EBImage::display(arch_101, method="raster")
+text(x = 20, y = 20, label = "건축학 개론: 흑백", adj = c(0,1), col = "blue", cex = 2)
+colorMode(arch_101) <- Color
+EBImage::display(arch_101, method="raster")
+text(x = 20, y = 20, label = "건축학 개론: 색상복원", adj = c(0,1), col = "blue", cex = 2)
+```
+
+## 3.6. RGB 색상 조합 {#image-color-mgmt-rgb}
+
+``` {r arch-101-rgb}
+## 4.2. RGB 색상결합
+arch_101_ch <- channel(arch_101, 'rgb')
+arch_101_r <- channel(arch_101_ch, "red")
+arch_101_g <- channel(arch_101_ch, "green")
+arch_101_b <- channel(arch_101_ch, "blue")
+
+par(mfrow=c(1,4))
+EBImage::display(arch_101_r, method="raster")
+text(x = 20, y = 20, label = "RGB 중 빨강", adj = c(0,1), col = "red", cex = 2, family="NanumGothic")
+EBImage::display(flip(arch_101_g), method="raster")
+text(x = 20, y = 20, label = "RGB 중 녹색", adj = c(0,1), col = "green", cex = 2, family="NanumGothic")
+EBImage::display(flop(arch_101_b), method="raster")
+text(x = 20, y = 20, label = "RGB 중 파랑", adj = c(0,1), col = "blue", cex = 2, family="NanumGothic")
+EBImage::display(rgbImage(arch_101_r, arch_101_g, arch_101_b), method="raster", all=TRUE)
+text(x = 20, y = 20, label = "개별 RGB 결합", adj = c(0,1), col = "blue", cex = 2, family="NanumGothic")
+```
+
+## 3.7. RGB 색상 히스토그램 {#image-color-mgmt-histogram}
+
+``` {r arch-101-histogram}
+## 4.3. RGB 색상결합 히스토그램
+
+par(mfrow=c(2,2))
+hist(arch_101)
+hist(arch_101_g)
+hist(arch_101_r)
+hist(arch_101_b)
+```
+
+# 4. 이미지 잘라내고, 회전, 이동 {#image-mgmt}
 
 이미지의 밝기, 명도 등을 조정했다면, 경우에 따라서는 이미지 특정 영역을 뽑아내고,
-회전, 이동을 시킬 수도 있다.
+회전, 이동을 시킬 수도 있다. 이미지를 좌우로 쭉 연결시키거나, 위아래로 순차적으로 쌓아 놓거나, 
+경우에 따라서는 이미지 내부에 이미지를 내포하는 것도 가능하다.
 
-### 4.1. 이미지 특정영역 잘라내기
+
+## 4.1. 이미지 특정영역 잘라내기 {#image-mgmt-cropping}
 
 ``` {r arch-101-cropping}
 # 6. 잘라내기(Cropping) ---------------------------------------- 
-
 suji <- arch_101[290:470, 170:550,]
 han  <- arch_101[130:290, 170:550,]
 
@@ -138,74 +208,103 @@ EBImage::display(suji, method="raster")
 text(x = 20, y = 20, label = "건축학 개론 감마: 수지", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
 ```
 
-### 4.2. 이미지 회전과 이동
+## 4.2. 이미지 변환 {#image-mgmt-transform}
+
+뒤집기, 좌우돌림, 크기조정, 이미지 회전를 통해 이미지를 변환시킬 수 있다.
 
 ``` {r arch-101-transform}
-# 7. 공간변환(Spatial Transformation) ---------------------------------------- 
+# 6. 이미지 변환 ---------------------------------------- 
+## ㄴ 6.1. 뒤집기, 좌우돌림, 크기조정, 이미지 회전 ------
+arch_101_flip   <- flip(arch_101)
+arch_101_flop   <- flop(arch_101)
+arch_101_resize <- resize(arch_101, w=40, h=60)
+arch_101_rotate <- rotate(arch_101, 45, bg.col = "white")
+
+par(mfrow=c(1,4))
+EBImage::display(arch_101_flip, method="raster")
+text(x = 20, y = 20, label = "뒤집기(flip)", adj = c(0,1), col = "blue", cex = 1.5, family="NanumGothic")
+EBImage::display(arch_101_flop, method="raster")
+text(x = 20, y = 20, label = "좌우바꿈(flop)", adj = c(0,1), col = "blue", cex = 1.5, family="NanumGothic")
+EBImage::display(arch_101_resize, method="raster")
+text(x = 20, y = 20, label = "크기조정(resize)", adj = c(0,0.5), col = "blue", cex = 1.5, family="NanumGothic")
+EBImage::display(arch_101_rotate, method="raster", all=TRUE)
+text(x = 20, y = 20, label = "이미지 회전", adj = c(0,1), col = "blue", cex = 1.5, family="NanumGothic")
+```
+
+## 4.3. 이미지 이동 {#image-mgmt-move}
+
+이미지를 회전 혹은 이동시키고 동시에 회전과 이동을 순차적으로 적용할 수 있다.
+
+``` {r arch-101-move}
+## ㄴ 6.2. 공간변환(Spatial Transformation) ---------------------------------------- 
 arch_101_rot   <- rotate(arch_101, 45)
 arch_101_trans <- translate(arch_101, c(100,200))
 arch_101_rot_trans <- translate(rotate(arch_101,45),c(100,200))
 
 par(mfrow=c(1,3))
 EBImage::display(arch_101_rot, method="raster")
-text(x = 20, y = 20, label = "건축학 개론: 45도 회전", adj = c(0,1), col = "orange", cex = 1.5, family="nanum")
+text(x = 20, y = 20, label = "건축학 개론: 45도 회전", adj = c(0,1), col = "orange", cex = 2)
 EBImage::display(arch_101_trans, method="raster")
-text(x = 20, y = 20, label = "건축학 개론: 우측 300픽셀, 아래 500픽셀 이동", adj = c(0,1), col = "orange", cex = 1.5, family="nanum")
+text(x = 20, y = 20, label = "건축학 개론: 우측 300픽셀, 아래 500픽셀 이동", adj = c(0,1), col = "orange", cex = 2)
 EBImage::display(arch_101_rot_trans, title="건축학 개론 밝기 0.5 감소", method="raster")
-text(x = 20, y = 20, label = "건축학 개론: 45도 회전과 이동병행 ", adj = c(0,1), col = "orange", cex = 1.5, family="nanum")
+text(x = 20, y = 20, label = "건축학 개론: 45도 회전과 이동병행 ", adj = c(0,1), col = "orange", cex = 2)
 ```
 
-## 5. 이미지 색상관리
+# 5. 이미지 결합 {#image-mgmt-combine}
 
-대표적으로 이미지의 색상을 빼고 흑백으로만 다루고자 할 경우 활용한다.
+## 5.1. 이미지 붙이기 {#image-mgmt-combine-stack}
 
-``` {r arch-101-color-management}
-# 8. 색상 관리(Color Management) ---------------------------------------- 
-## 8.1. 흑백과 천연색상
-par(mfrow=c(1,2))
-colorMode(arch_101) <- Grayscale
-EBImage::display(arch_101, method="raster")
-text(x = 20, y = 20, label = "건축학 개론: 흑백", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
-colorMode(arch_101) <- Color
-EBImage::display(arch_101, method="raster")
-text(x = 20, y = 20, label = "건축학 개론: 색상복원", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
+``` {r arch-101-combine-stack}
+# 7. 이미지 결합(Combine) ---------------------------------------- 
+## ㄴ 7.1. 순서대로 결합 -----
+colorMode(rpi_logo) <- Color
 
-## 8.2. RGB 색상결합
-arch_101_ch <- channel(arch_101, 'rgb')
-arch_101_r <- arch_101_ch[,,1]
-arch_101_g <- arch_101_ch[,,2]
-arch_101_b <- arch_101_ch[,,3]
-
-par(mfrow=c(1,4))
-EBImage::display(arch_101_r, method="raster")
-text(x = 20, y = 20, label = "RGB 중 빨강", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
-EBImage::display(flip(arch_101_g), method="raster")
-text(x = 20, y = 20, label = "RGB 중 녹색", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
-EBImage::display(flop(arch_101_b), method="raster")
-text(x = 20, y = 20, label = "RGB 중 파랑", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
-EBImage::display(rgbImage(arch_101_r, arch_101_g, arch_101_b), method="raster", all=TRUE)
-text(x = 20, y = 20, label = "개별 RGB 결합", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
-```
-
-## 6. 이미지 조합
-
-이미지를 결합하는 경우 이미지를 좌우로 쭉 연결시키거나, 위아래로 순차적으로 쌓아 놓거나, 
-경우에 따라서는 이미지 내부에 이미지를 내포하는 것도 가능하다.
-
-``` {r arch-101-combine-images}
-# 9. 이미지 결합(Combine) ---------------------------------------- 
-## 9.1. 순서대로 결합
-rpi_logo <- readImage("fig/raspberrypi-logo.png")
 rpi_logo <- resize(rpi_logo, w=dim(arch_101)[1], h=dim(arch_101)[2])
 
+par(mfrow=c(1,2))
 EBImage::display(Image(abind::abind(rpi_logo, arch_101, along=1), colormode=Color), method="raster")
-
-## 9.2. 겹쳐서 이미지 결합
-arch_rpi <- EBImage::combine(arch_101, rpi_logo)
-EBImage::display(arch_rpi, method="raster", all=TRUE)
+EBImage::display(Image(abind::abind(rpi_logo, arch_101, along=2), colormode=Color), method="raster")
 ```
 
-## 7. 이미지 필터링
+## 5.2. 이미지 겹치기 {#image-mgmt-combine-overlay}
+
+``` {r arch-101-combine-overlay}
+## ㄴ 7.2. 겹쳐서 결합 ----
+
+arch_rpi <- rpi_logo + arch_101
+
+par(mfrow=c(1,3))
+display(rpi_logo/3 + arch_101, method="raster")
+display(arch_rpi, method="raster")
+display(rpi_logo + arch_101/3, method="raster")
+```
+
+## 5.3. 이미지와 텍스트 결합 {#image-mgmt-combine-overlay-text}
+
+``` {r arch-101-combine-overlay-text}
+## ㄴ 7.3. 이미지 텍스트 추가 -----
+
+colorMode(arch_101) <- Color
+display(arch_101, method="raster")
+text(x = 20, y = 20, label = "한국 R Meetup", adj = c(0,0.5), col = "blue", cex = 1.5, family="NanumGothic")
+```
+
+## 5.4. 두 이미지 결합 {#image-mgmt-combine-overlay-two}
+
+``` {r arch-101-combine-overlay-two}
+## ㄴ 7.4. 로고 위치 반영 -----
+
+colorMode(arch_101) <- Grayscale
+colorMode(rpi_logo) <- Grayscale
+
+arch_101 <- resize(arch_101, w=200, h=400)
+rpi_logo <- resize(rpi_logo, w=200, h=400)
+
+img_logo <- paintObjects(rpi_logo, toRGB(arch_101),  col='green')
+display(img_logo, method="raster", all=TRUE)
+```
+
+# 6. 이미지 필터링  {#image-filtering}
 
 고역(高域) 필터(High-pass Filter)를 적용하여 사진속 객체의 엣지(Edge)를 탐지해서 배경과 사물을 구분하거나,
 저역(低域) 필터(Low-pass Filter)를 적용하여 잡음 노이즈를 제거하거나 이미지를 부드럽게 한다.
@@ -231,7 +330,7 @@ EBImage::display(arch_101_fHigh, method="raster")
 text(x = 20, y = 20, label = "고역필터(High-pass Filter)", adj = c(0,1), col = "blue", cex = 1.5, family="nanum")
 ```
 
-## 8. 이미지 세분화(Segmentation)
+# 7. 이미지 세분화(Segmentation) {#image-segmentation}
 
 이미지의 특정 영역을 세분화하여 `bwlabel`을 통해 그림 속에 포함된 특정객체가 몇 개인지 갯수를 센다.
 
