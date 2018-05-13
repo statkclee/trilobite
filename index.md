@@ -68,9 +68,12 @@ subtitle: 고생대 삼엽충의 전성기를 재현
         1. [작업 이미지 긁어오기](cv-img-download.html)
         1. [이미지 한개 변환작업](cv-img-conversion.html)
 1. **R 이미지 영상**
-    1. [이미지 처리 101 - 건축학개론](cv-architecture-101.html)
+    1. [이미지 처리 101 - 건축학개론(`EBImage`)](cv-architecture-101.html)
+    1. [이미지 처리 101 - 건축학개론(`magick`)](cv-architecture-101-magick.html)
     1. [R 이미지 처리 101](cv-r-101.html) 
     1. [이미지 &rarr; 레고(Lego)](cv-lego.html) 
+    1. [이미지 &rarr; 스케치(pencil sketch)](cv-pencil-sketch.html) 
+    1. [이미지 &rarr; 작은 입자(particles)](cv-particles.html) 
 1. **프로젝트**
     1. [이미지 처리 작업흐름](skimage-workflow.html)
         1. [사진에 나온 미국동전 합계 계산](skimage-coins.html)
