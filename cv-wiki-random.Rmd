@@ -1,0 +1,157 @@
+---
+layout: page
+title: xwMOOC 고생대 프로젝트
+subtitle: 위키 무작위 이미지
+output:
+  html_document: 
+    theme: journal
+    toc: yes
+    toc_depth: 2
+    number_sections: TRUE
+    toc_float: true
+    highlight: tango
+    code_folding: show
+mainfont: NanumGothic
+---
+
+``` {r, include=FALSE}
+source("tools/chunk-options.R")
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+
+```
+
+# 딥러닝의 시작 [^start-deep-learning] {#deep-learning-kickoff}
+
+[^start-deep-learning]: [Revolutions - Generate image captions with the Computer Vision API](http://blog.revolutionanalytics.com/2018/03/computer-vision-api.html)
+
+이미지를 가지고 딥러닝을 시작할 경우 가장 먼저 딥러닝에 활용할 다양한 이미지를 얻는 것으로부터 시작된다.
+사진 정보는 과거 [플리커(flickr)](https://www.flickr.com/), 최근에 [인스타그램(instagram)](https://www.instagram.com/?hl=ko) 등 진화하고 있지만, 
+모두 상업성을 염두에 두고 있어 각별한 주의가 필요하다. 상대적으로 위키백과로 유명한 위키재단에서 제공하는 API를 통해 이미지를 얻는 것이 유용할 경우가 많다.
+
+# 랜덤 무작위 이미지 가져오기 [^random-image] {#function-random-image}
+
+[^random-image]: [random_image.R](https://gist.githubusercontent.com/revodavid/3bdb4be873c5b516ebdf452a7d8ab21b/raw/487672010aad1e46f062b91a5e68a26e27306ac5/random_image.R)
+
+위키에서 제공하는 [Wikimedia API](https://www.mediawiki.org/wiki/API:Main_page)를 통해 방대한 위키에서 제공하는 이미지 정보에 접근이 가능하다.
+특히, R 코드로 [random_image.R](https://gist.githubusercontent.com/revodavid/3bdb4be873c5b516ebdf452a7d8ab21b/raw/487672010aad1e46f062b91a5e68a26e27306ac5/random_image.R)이 
+공개되어 있어 코드를 재사용해서 랜덤 무작위 이미지를 가져온다.
+
+``` {r random-image-function}
+# 0. 환경설정 -----
+library(tidyverse)
+library(magick)
+library(httr)
+library(tools)
+
+random_image <- function() {
+  ## Return the URL random image in Wikimedia Commons
+  random_query <- paste0("https://commons.wikimedia.org/w/api.php?",
+                         "action=query",
+                         "&generator=random", # get a random page
+                         "&grnlimit=1",       # return 1 page
+                         "&grnnamespace=6",   # category: File
+                         "&prop=imageinfo",
+                         "&iiprop=url|size|extmetadata",
+                         "&iiurlheight=1080",  # limit images height (sometimes)
+                         "&format=json&formatversion=2")
+  random_response <- POST(random_query)
+  output <- content(random_response)
+  url <- output$query$pages[[1]]$imageinfo[[1]]$url
+  ext <- tolower(file_ext(url))
+  w <- output$query$pages[[1]]$imageinfo[[1]]$width
+  h <- output$query$pages[[1]]$imageinfo[[1]]$height
+  size <- output$query$pages[[1]]$imageinfo[[1]]$size
+  desc <- output$query$pages[[1]]$imageinfo[[1]]$extmetadata$ImageDescription$value 
+  if(w<50 || h<50) stop("Image too small") 
+  if(size > 4000000) stop("Image too large")
+  if(!(ext %in% c("jpg","jpeg","png","gif","bmp"))) stop(paste("invalid image type:",ext))
+  attr(url, "dims") <- c(w=w,h=h)
+  attr(url, "desc") <- desc
+  url
+} 
+```
+
+# 하나가 아닌 다수 이미지 {#crawl-random-image}
+
+이미지를 다수 가져온다. 명심해야 되는 사실은 이미지가 정형화 되어 있지 않아 모양과 크기가 제각기라 
+얖서 정한 기준에 맞는 것만 가져온다. 파일 형식도 마찬가지다.
+
+``` {r many-random-image}
+# 1. 데이터 -----
+## 1.1. 이미지 데이터 위키에서 가져오기 -----
+wiki_image_list <- vector("list", length=20)
+
+for(i in 1:length(wiki_image_list)) {
+  tryCatch({
+    wiki_image_list[[i]] <- random_image()
+  }, error = function(e) {})
+}
+
+wiki_image_list <- plyr::compact(wiki_image_list)
+
+listviewer::jsonedit(wiki_image_list)
+```
+
+# 리스트 &rarr; 데이터프레임 {#rectangle-random-image}
+
+무작위로 가져온 이미지 데이터를 이미지 처리를 위해서 데이터프레임으로 변환시킨다.
+
+``` {r rectangle-random-image, eval=TRUE}
+## 1.2. 리스트 --> 데이터프레임 변환 -----
+wiki_image_df <- tibble(
+  desc = map_chr(wiki_image_list, attr, which="desc"),
+  dims = map(wiki_image_list, attr, which="dims"),
+  url  = wiki_image_list %>% unlist
+)
+
+wiki_image_df <- wiki_image_df %>% 
+  mutate(dims = map(dims, enframe, name="dim")) %>% 
+  unnest(dims) %>% 
+  spread(dim, value)
+
+wiki_image_df %>% 
+  select(h, w, desc, url) %>% 
+  DT::datatable()
+```
+
+# 이미지 처리  {#image-process-random-image}
+
+`image_read()` 함수를 통해서 **URL**만 있다면 바로 이미지 처리가 가능하다.
+가져온 이미지만 엄지손톱 그림(thumbnail) 형태로 작게 해서 제대로 준비가 되었는지 시각적으로 확인한다.
+
+``` {r process-random-image, eval=TRUE}
+# 2. 매직 시각화 -----
+## 2.1. URL --> 이미지 변환
+magick_image_list <- vector("list", length=nrow(wiki_image_df))
+
+for(i in 1:nrow(wiki_image_df)) {
+  magick_image_list[[i]] <- image_read(wiki_image_df$url[i])
+}
+## 크기 300x px 통일
+magick_image_list <- map(magick_image_list, image_scale, geometry="300x")
+
+map(magick_image_list, image_scale, geometry="50x") %>% 
+  image_join() %>% 
+  image_append()
+```
+
+# 환영도장 찍기  {#animate-process-random-image}
+
+위키에서 무작위로 뽑기한 이미지가 R 이미지 처리 분야로 넘어왔다는 것을 환영하는 의미에서 모든 이미지에 
+R 로고를 찍고 이를 애니메이션 형태로 제작한다.
+
+``` {r animate-random-image, eval=TRUE}
+## R 로고 가져오기 
+r_logo <- image_read("https://jeroen.github.io/images/Rlogo.png") %>% 
+  image_scale("100x")
+
+## 모든 이미지에 R 로고 삽입
+magick_image_list <- map(magick_image_list, function(x) image_composite(x, r_logo, offset="+200+110"))
+
+magick_image_df <- image_join(magick_image_list)
+
+image_animate(magick_image_df, fps=0.5, dispose = "previous")
+```
+
+
+

@@ -70,6 +70,8 @@ subtitle: 고생대 삼엽충의 전성기를 재현
 1. **R 이미지 영상**
     1. [이미지 처리 101 - 건축학개론(`EBImage`)](cv-architecture-101.html)
     1. [이미지 처리 101 - 건축학개론(`magick`)](cv-architecture-101-magick.html)
+    1. [위키 무작위 이미지](cv-wiki-random.html) 
+    1. [비행기 vs 자동차 - 강아지 vs 고양이](http://statkclee.github.io/deep-learning/r-keras-cats-and-dogs.html)
     1. [R 이미지 처리 101](cv-r-101.html) 
     1. [이미지 &rarr; 레고(Lego)](cv-lego.html) 
     1. [이미지 &rarr; 스케치(pencil sketch)](cv-pencil-sketch.html) 
