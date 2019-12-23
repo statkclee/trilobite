@@ -76,6 +76,7 @@ subtitle: 고생대 삼엽충의 전성기를 재현
     1. [이미지 &rarr; 레고(Lego)](cv-lego.html) 
     1. [이미지 &rarr; 스케치(pencil sketch)](cv-pencil-sketch.html) 
     1. [이미지 &rarr; 작은 입자(particles)](cv-particles.html) 
+    1. [R - `Open CV`](cv-r-opencv.html) 
 1. **프로젝트**
     1. [이미지 처리 작업흐름](skimage-workflow.html)
         1. [사진에 나온 미국동전 합계 계산](skimage-coins.html)

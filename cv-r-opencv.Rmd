@@ -1,0 +1,42 @@
+---
+layout: page
+title: xwMOOC 고생대 프로젝트
+subtitle: "R - `Open CV`"
+output:
+  html_document: 
+    toc: yes
+    toc_float: true
+    highlight: tango
+    code_folding: show
+    number_section: true
+editor_options: 
+  chunk_output_type: console
+mainfont: NanumGothic
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
+                      comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
+```
+
+# R OPEN CV {#r-opencv}
+
+[opencv](https://github.com/ropensci/opencv) 팩키지가 R에서 
+
+`opencv`를 사용하기 위해서는 먼저 `opencv`를 설치해야만 한다.
+
+```{bash install-opencv, eval=FALSE}
+$ brew install opencv
+```
+
+그리고 나서 `devtools::install_github("ropensci/opencv")` 명령어로 운영체제에 설치된 `opencv`와 R를 단단히 결합시켜야 한다.
+
+```{r opencv-test}
+# devtools::install_github("ropensci/opencv")
+library(opencv)
+
+unconf <- ocv_read('https://jeroen.github.io/images/unconf18.jpg')
+faces <- ocv_face(unconf)
+ocv_write(faces, 'fig/faces.jpg')
+```
+
