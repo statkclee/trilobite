@@ -1,0 +1,77 @@
+---
+layout: page
+title: xwMOOC 고생대 프로젝트
+subtitle: "R - KPMG Ideation Challenge"
+output:
+  html_document: 
+    theme: journal
+    toc: yes
+    toc_depth: 2
+    number_sections: TRUE
+    toc_float: true
+    highlight: tango
+    code_folding: show
+mainfont: NanumGothic
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
+                      comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
+
+library(tidyverse)
+library(reticulate)
+use_condaenv("anaconda3")
+# reticulate::repl_python()
+```
+
+# 해커톤 포스터 {#ideation-poster}
+
+KPMG Ideation Hackerton PDF 파일을 받아 읽어 들이고 이를 인터넷에 공유하기 위한 용도록 JPG 혹은 PNG 파일로 변환시킨다. 이를 위해서 `image_read_pdf()` 함수로 불러 읽어오고, `image_write()` 함수 `format="png"`를 넣어 PNG 파일로 변환시킨다. JPEG 파일로도 변환을 시킨다. `quality = "50%"`는 손실율을 나타낸다.
+
+```{r ideation-challenge}
+library(tidyverse)
+library(magick)
+library(pdftools)
+
+poster <- image_read_pdf("data/Kor_Ideation Challenge_Poster_A1.pdf")
+
+image_write(poster, "fig/KPMG_kic_poster.png", format="png")
+
+image_write(poster, "fig/KPMG_kic_poster.jpeg", format="jpeg", quality = "50%")
+```
+
+<div class = "row">
+  
+  <div class = "col-md-6">
+
+**PNG 파일**
+
+`.png` 파일을 불러 읽어온다.
+
+```{r ideation-challenge-png}
+poster_png <- image_read("fig/KPMG_kic_poster.png")
+
+poster_png
+```
+
+  </div>
+  
+  <div class = "col-md-6">
+
+**JPEG 파일**
+
+`.jpeg` 파일을 불러 읽어온다.
+
+```{r ideation-challenge-jpeg}
+poster_jpeg <- image_read("fig/KPMG_kic_poster.jpeg")
+
+poster_jpeg
+```
+
+
+  </div>
+  
+</div>
+
