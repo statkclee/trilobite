@@ -46,14 +46,14 @@
 <div class="panel-body">
 <p>“The future is here, it’s just not evenly distributed yet.”<br />
            - William Gibson</p>
-<p>“고대에는 ’땅’이 가장 중요했고 땅이 소수에게 집중되자 인간은 귀족과 평민으로 구분됐으며, 근대에는 ’기계’가 중요해지면서 기계가 소수에게 집중되자 인간은 자본가와 노동자 계급으로 구분됐다”. 이제는 <strong>데이터</strong>가 또 한번 인류를 구분하는 기준이 될 것이다. 향후 데이터가 소수에게 집중되면 단순 계급에 그치는 게 아니라 데이터를 가진 종과 그렇지 못한 종으로 분류될 것이이다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>“고대에는 ’땅’이 가장 중요했고 땅이 소수에게 집중되자 인간은 귀족과 평민으로 구분됐으며, 근대에는 ’기계’가 중요해지면서 기계가 소수에게 집중되자 인간은 자본가와 노동자 계급으로 구분됐다”. 이제는 <strong>데이터</strong>가 또 한번 인류를 구분하는 기준이 될 것이다. 향후 데이터가 소수에게 집중되면 단순 계급에 그치는 게 아니라 데이터를 가진 종과 그렇지 못한 종으로 분류될 것이이다. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <p>           - 유발 하라리(Yuval Noah Harari)</p>
 </div>
 </section>
 <iframe width="300" height="180" src="https://www.youtube.com/embed/7Xs3auqcX7k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 <p>물리적 세계를 다양한 카메라 기술을 사용해서 디지털 데이터로 변환을 한 후에 이를 최종상품 형태로 제공하기 전에 다양한 시각정보를 가공, 처리, 생성하는 과정을 거치게 된다. 만약 각종 데이터를 효과적이고 효율적으로 처리하는 R과 파이썬 언어로 이를 통합적으로 이해하고 실용적인 사례를 만들어보자.</p>
-<p>고생대 참엽충의 전성기 재현하는데 사용되는 R 팩키지와 파이썬 라이브러리와 작업흐름 파이프라인은 다음과 같다. <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>고생대 참엽충의 전성기 재현하는데 사용되는 R 팩키지와 파이썬 라이브러리와 작업흐름 파이프라인은 다음과 같다. <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p><img src="fig/python-cv-toolchain.png" alt="파이썬 컴퓨터 비젼 툴체인" width="70%"></p>
 <section class="getready panel panel-warning">
 <div class="panel-heading">
@@ -91,9 +91,9 @@
 </div>
 </section>
 <h2 id="학습-목차">학습 목차</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><strong>이미지 분석 및 처리를 위한 기초: 파이썬</strong>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="cv-intro.html">이미지 파일이 왜 큰가?</a></li>
 <li><a href="basic-linear-algebra.html">이미지 분석을 위한 수학: 선형대수</a>
 <ul>
@@ -104,18 +104,18 @@
 <li><a href="opencv-install.html">OpenCV 설치 및 헬로우 월드</a></li>
 </ol></li>
 <li><a href="cv-pipeline.html">이미지 작업 파이프라인</a>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="cv-import.html">이미지 파일 가져오기</a></li>
 <li><a href="cv-image-info.html">이미지 파일 정보 살펴보기</a></li>
 <li><a href="cv-add-images.html">이미지 합치기</a></li>
 <li>이미지 처리 자동화
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="cv-img-download.html">작업 이미지 긁어오기</a></li>
 <li><a href="cv-img-conversion.html">이미지 한개 변환작업</a></li>
 </ol></li>
 </ol></li>
 <li><strong>R 이미지 영상</strong>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="cv-architecture-101.html">이미지 처리 101 - 건축학개론(<code>EBImage</code>)</a></li>
 <li><a href="cv-architecture-101-magick.html">이미지 처리 101 - 건축학개론(<code>magick</code>)</a></li>
 <li><a href="cv-wiki-random.html">위키 무작위 이미지</a></li>
@@ -126,13 +126,14 @@
 <li><a href="cv-particles.html">이미지 → 작은 입자(particles)</a></li>
 <li><a href="cv-r-opencv.html">R - <code>Open CV</code></a> → 2019 R 연말모임</li>
 <li><a href="cv-kpmg-ideation-challenge.html">R - KPMG Ideation Challenge</a></li>
+<li><a href="skimage-workflow.html">이미지 처리 작업흐름</a>
+<ol type="1">
+<li><a href="skimage-coins.html">사진에 나온 미국동전 합계 계산</a></li>
+<li><a href="cv-count-object.html">이미지 속 객체 세기: <code>magick</code></a></li>
+</ol></li>
 </ol></li>
 <li><strong>프로젝트</strong>
-<ol style="list-style-type: decimal">
-<li><a href="skimage-workflow.html">이미지 처리 작업흐름</a>
-<ol style="list-style-type: decimal">
-<li><a href="skimage-coins.html">사진에 나온 미국동전 합계 계산</a></li>
-</ol></li>
+<ol type="1">
 <li><a href="cv-count-books.html">이미지에 나온 책이 몇개</a></li>
 <li><a href="cv-face-detection.html">얼굴인식-Cascade</a></li>
 <li><a href="cv-car-detect.html">자동차 탐지</a></li>
@@ -141,7 +142,7 @@
 <li><a href="http://statkclee.github.io/deep-learning/ms-oxford-video.html">동영상 감정 분석</a></li>
 </ol></li>
 <li><strong>APIs</strong>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="gcv-hello-world.html">구글 클라우드 비젼(Google Cloud Vision API) 설치 및 헬로우 월드</a></li>
 </ol></li>
 </ol>
@@ -210,13 +211,13 @@
 <li><a href="https://statkclee.github.io/hq/">저녁이 있는 삶과 새판짜기 - 제7공화국</a></li>
 </ul></li>
 </ul>
-<div class="footnotes">
+<section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p><a href="http://news.mk.co.kr/newsRead.php?year=2018&amp;no=58432">‘사피엔스’ 저자 유발 하라리 “인간을 해킹하는 시대가 온다”, “머신러닝·AI·생물학 발전…뇌과학 이해도 한층 높여”</a><a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p><a href="http://www.pyimagesearch.com/2014/01/12/my-top-9-favorite-python-libraries-for-building-image-search-engines/">My Top 9 Favorite Python Libraries for Building Image Search Engines</a><a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p><a href="http://news.mk.co.kr/newsRead.php?year=2018&amp;no=58432">‘사피엔스’ 저자 유발 하라리 “인간을 해킹하는 시대가 온다”, “머신러닝·AI·생물학 발전…뇌과학 이해도 한층 높여”</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a href="http://www.pyimagesearch.com/2014/01/12/my-top-9-favorite-python-libraries-for-building-image-search-engines/">My Top 9 Favorite Python Libraries for Building Image Search Engines</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
-</div>
+</section>
         </div>
       </div>
       </article>

@@ -78,9 +78,10 @@ subtitle: 고생대 삼엽충의 전성기를 재현
     1. [이미지 &rarr; 작은 입자(particles)](cv-particles.html) 
     1. [R - `Open CV`](cv-r-opencv.html) &rarr; 2019 R 연말모임
     1. [R - KPMG Ideation Challenge](cv-kpmg-ideation-challenge.html)
-1. **프로젝트**
     1. [이미지 처리 작업흐름](skimage-workflow.html)
         1. [사진에 나온 미국동전 합계 계산](skimage-coins.html)
+        1. [이미지 속 객체 세기: `magick`](cv-count-object.html)
+1. **프로젝트**
     1. [이미지에 나온 책이 몇개](cv-count-books.html)
     1. [얼굴인식-Cascade](cv-face-detection.html)
     1. [자동차 탐지](cv-car-detect.html)
